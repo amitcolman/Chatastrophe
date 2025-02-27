@@ -1,0 +1,2 @@
+[console_scripts]
+secure_ai_bot = professional_secure_ai_bot.main:main

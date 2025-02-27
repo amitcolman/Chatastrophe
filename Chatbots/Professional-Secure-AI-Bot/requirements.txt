@@ -1,0 +1,9 @@
+requests
+langchain
+flask
+langchain-openai
+langchain-community
+spacy
+chromadb
+setuptools
+spacy
