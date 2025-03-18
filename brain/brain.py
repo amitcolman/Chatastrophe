@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import List
+from typing import List, Optional
 
 import yaml
 
@@ -14,6 +14,8 @@ class BrainComponent:
         self.logger = logging.getLogger(__name__)
         self.attack_categories: list[AttackCategory] = []
         self.load_attack_categories()
+
+        self.successful_attacks: List[Attack] = []
 
     def load_attack_categories(self):
         """
@@ -53,12 +55,17 @@ class BrainComponent:
 
         integration_instance = IntegrationComponent()
         # TODO: Use the integration_instance to send the attack command to the chatbot
-        response = "placeholder"
+        response = integration_instance.send_attack_command("http://localhost:5000/rag-chatbot/ask", attack.prompt)
+        # TODO: ------------------------------------------------------------------------
         self.logger.debug(f"Attack response: {response}")
+
         is_attack_successful = self.validate_attack_response(attack, response)
+        if is_attack_successful:
+            self.successful_attacks.append(attack)
 
+        self.logger.info(f"Attack {attack.name} was successful: {is_attack_successful}")
 
-    def validate_attack_response(self, attack: Attack, response: str) -> bool:
+    def validate_attack_response(self, attack: Attack, response: Optional[dict]) -> bool:
         """
         Process the response of an attack
 
@@ -69,14 +76,24 @@ class BrainComponent:
         """
         self.logger.info(f"Processing attack response for {attack.name}")
 
+        if not response:
+            self.logger.error("No response received for attack")
+            return False
+
         if not attack.expected_outputs:
             self.logger.error("No expected outputs defined for attack")
             return False
 
-        for expected_output in attack.expected_outputs:
-            if expected_output.lower() in response.lower():
-                self.logger.info("Attack successful")
-                return True
+        if response["status"] != 200:
+            return False
 
-        self.logger.info("Attack unsuccessful")
-        return False
+        data = response.get("data", None)
+        if not data or not isinstance(data, str):
+            self.logger.error("Invalid response data")
+            return False
+
+        for expected_output in attack.expected_outputs:
+            if expected_output.lower() not in data.lower():
+                return False
+
+        return True
