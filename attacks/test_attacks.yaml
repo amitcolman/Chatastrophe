@@ -1,7 +1,7 @@
 
 name: Test Attacks
 description: These are test attacks
-category: "test"
+category: PROMPT_INJECTION
 
 attacks:
   - name: Test Attack 1
