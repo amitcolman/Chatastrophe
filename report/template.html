@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Evaluation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center my-5">Chatastrophe - Chatbot Evaluation</h1>
+        
+        <h2 class="text-left my-5">1. Executive Summary</h2>        
+            <h3 >Overall Score - 55/100</h3>
+                <div style="width: 50%; height: auto;">
+                    <canvas id="blockRatePie"></canvas>
+                </div>            
+            
+            <h3 class="text-left my-4">1.1 Attack Scenarios</h2>
+                <div style="width: 50%; height: auto;">
+                    <canvas id="blockRateChart"></canvas>
+                </div>
+
+            
+            <h3 class="text-left my-4">1.2 Recommendations</h2>
+                <ul>
+                    <li>do this</li> 
+                    <li>do that</li>
+                </ul>
+
+        <h2 class="text-left my-5">2. Attacks Details</h2>
+        <!-- Attack Sections (To be modified manually) -->
+        <div id="attack-sections">
+            <h3>2.1. Attack 1 – 20% Block Rate</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Result</th>
+                        <th>Target’s Response</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Blocked</td>
+                        <td>no</td>
+                    </tr>
+                    <tr>
+                        <td>Succeeded</td>
+                        <td>here</td>
+                    </tr>
+                    <tr>
+                        <td>Succeeded</td>
+                        <td>here</td>
+                    </tr>
+                    <tr>
+                        <td>Succeeded</td>
+                        <td>here</td>
+                    </tr>
+                    <tr>
+                        <td>Succeeded</td>
+                        <td>here</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>Mitigations:</strong> 
+                <ul>
+                    <li>do this</li> 
+                    <li>do that</li>
+                </ul>
+            </p>
+            
+            <h3>2.2. Attack 2 – 50% Block Rate</h3>
+            <table class="table table-bordered">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Result</th>
+                            <th>Target’s Response</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Blocked</td>
+                            <td>no</td>
+                        </tr>
+                        <tr>
+                            <td>Succeeded</td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td>Blocked</td>
+                            <td>no</td>
+                        </tr>
+                        <tr>
+                            <td>Succeeded</td>
+                            <td>here</td>
+                        </tr>
+                    </tbody>
+                </table>
+    
+            <p><strong>Mitigations:</strong> 
+                <ul>
+                    <li>do this</li> 
+                    <li>do that</li>
+                </ul>
+            </p>
+
+            <h3>2.3. Attack 3 – 100% Block Rate</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Result</th>
+                        <th>Target’s Response</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Blocked</td>
+                        <td>no</td>
+                    </tr>
+                    <tr>
+                        <td>Succeeded</td>
+                        <td>here</td>
+                    </tr>
+                </tbody>
+            </table>
+
+    </div>
+        
+        <script>
+            // Chart Data (Modify manually to match chosen attacks)
+            const attackLabels = ['Attack Name 1', 'Attack Name 2', 'Attack Name 3'];
+            const blockedData = [1, 2, 2]; 
+            const succeededData = [4, 2, 0]; 
+            
+            const ctxBar = document.getElementById('blockRateChart').getContext('2d');
+            new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: attackLabels,
+                    datasets: [
+                        {
+                            label: 'Blocked',
+                            data: blockedData,
+                            backgroundColor: 'green'
+                        },
+                        {
+                            label: 'Succeeded',
+                            data: succeededData,
+                            backgroundColor: 'red'
+                        }
+                    ]
+                }
+            });
+            
+            const ctxPie = document.getElementById('blockRatePie').getContext('2d');
+            new Chart(ctxPie, {
+                type: 'pie',
+                data: {
+                    labels: ['Blocked', 'Succeeded'],
+                    datasets: [{
+                        data: [5, 6], // Total number across all attacks
+                        backgroundColor: ['green', 'red']
+                    }]
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>
