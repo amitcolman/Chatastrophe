@@ -5,6 +5,7 @@ from enums.owasp_llm import OwaspLLM
 
 logger = logging.getLogger(__name__)
 
+
 class Attack:
     def __init__(self, name: str, description: str, prompt: str, expected_outputs: list, severity: int,
                  use_ai_if_bad_output: bool = False, use_ai_if_inconclusive_output: bool = False):
@@ -33,6 +34,7 @@ class Attack:
             use_ai_if_bad_output=yaml_data.get("use_ai_if_bad_output", False),
             use_ai_if_inconclusive_output=yaml_data.get("use_ai_if_inconclusive_output", False)
         )
+
 
 class AttackCategory:
     def __init__(self, name: str, description: str, category: OwaspLLM, attacks: list[Attack]):

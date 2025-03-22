@@ -10,8 +10,12 @@ from enums.owasp_llm import OwaspLLM
 
 
 class BrainComponent:
-    def __init__(self):
+    def __init__(self, chatbot_name: str, chatbot_url: str):
         self.logger = logging.getLogger(__name__)
+
+        self.chatbot_name = chatbot_name
+        self.chatbot_url = chatbot_url
+
         self.attack_categories: list[AttackCategory] = []
         self.load_attack_categories()
 
@@ -53,10 +57,8 @@ class BrainComponent:
         """
         self.logger.info(f"Executing attack: {attack.name}")
 
-        integration_instance = IntegrationComponent()
-        # TODO: Use the integration_instance to send the attack command to the chatbot
-        response = integration_instance.send_attack_command("http://localhost:5000/rag-chatbot/ask", attack.prompt)
-        # TODO: ------------------------------------------------------------------------
+        integration_instance = IntegrationComponent(name=self.chatbot_name, url=self.chatbot_url)
+        response = integration_instance.send_attack_command(attack.prompt)
         self.logger.debug(f"Attack response: {response}")
 
         is_attack_successful = self.validate_attack_response(attack, response)

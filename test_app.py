@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
     logger.info("Test app started")
-    brain = BrainComponent()
+    brain = BrainComponent(chatbot_name="rag-chatbot", chatbot_url="http://localhost:5000/rag-chatbot/ask")
     # The first attack fails
     # brain.execute_attack(brain.attack_categories[0].attacks[0])
     brain.execute_attack(brain.attack_categories[0].attacks[1])
