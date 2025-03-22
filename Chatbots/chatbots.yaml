@@ -6,5 +6,12 @@ chatbots:
     headers:
       Connection: keep-alive
       Protocol: HTTP/1.1
+  - name: gdpr-chatbot
+    type: api
+    fields:
+      url: string
+    headers:
+      Connection: keep-alive
+      Protocol: HTTP/1.1
 
 
