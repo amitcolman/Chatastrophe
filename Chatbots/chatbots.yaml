@@ -1,0 +1,10 @@
+chatbots:
+  - name: rag-chatbot
+    type: api
+    fields:
+      url: string
+    headers:
+      Connection: keep-alive
+      Protocol: HTTP/1.1
+
+
