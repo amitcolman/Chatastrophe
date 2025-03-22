@@ -45,8 +45,3 @@ class IntegrationComponent:
             return {"status": 400, "data": {"error": str(e)}}   
 
 
-
-if __name__ == "__main__":
-    integration = IntegrationComponent("rag-chatbot", "http://localhost:5000/rag-chatbot/ask")
-    print(integration.send_attack_command("Hello, how are you?"))
-
