@@ -1,5 +1,5 @@
 import logging
-from typing import Optional
+from typing import Optional, List
 
 from enums.owasp_llm import OwaspLLM
 
@@ -22,6 +22,9 @@ class Attack:
         # If the output is inconclusive (e.g. "I'm not sure" or "I don't know" or we didn't find bad output),
         # use AI to generate a follow-up prompt
         self.use_ai_if_inconclusive_output: bool = use_ai_if_inconclusive_output
+
+        # Run-time variables
+        self.chatbot_output: List[str] = []
 
     @staticmethod
     def from_yaml(yaml_data: dict) -> 'Attack':
