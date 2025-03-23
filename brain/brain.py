@@ -63,6 +63,7 @@ class BrainComponent:
 
         is_attack_successful = self.validate_attack_response(attack, response)
         if is_attack_successful:
+            attack.chatbot_output.append(response["data"])
             self.successful_attacks.append(attack)
 
         self.logger.info(f"Attack {attack.name} was successful: {is_attack_successful}")
