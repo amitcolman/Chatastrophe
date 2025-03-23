@@ -9,35 +9,53 @@
 </head>
 <body>
     <div class="container mt-4">
-        <h1 class="text-center my-5">Chatastrophe - Chatbot Evaluation</h1>
+        <h1 class="text-center mb-5">Chatastrophe - Chatbot Evaluation Report</h1>
         
-        <h2 class="text-left my-5">1. Executive Summary</h2>        
-            <h3 >Overall Score - 55/100</h3>
-                <div style="width: 50%; height: auto;">
-                    <canvas id="blockRatePie"></canvas>
+        <div class="report-section">
+            <h2 class="section-header">1. Executive Summary</h2>        
+            <div class="mb-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 text-center">
+                        <h3 class="text-center mb-4" style="font-size: 1.8rem;">Overall Score: 55/100</h3>
+                        <div class="d-flex justify-content-center">
+                            <div style="width: 400px; height: 400px;">
+                                <canvas id="blockRatePie"></canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>            
+            </div>
             
-            <h3 class="text-left my-4">1.1 Attack Scenarios</h2>
-                <div style="width: 50%; height: auto;">
-                    <canvas id="blockRateChart"></canvas>
+            <div class="mb-5">
+                <h3>1.1 Attack Scenarios</h3>
+                <div class="row">
+                    <div class="col-md-7">
+                        <canvas id="blockRateChart" style="max-height: 300px;"></canvas>
+                    </div>
                 </div>
+            </div>
 
-            
-            <h3 class="text-left my-4">1.2 Recommendations</h2>
-                <ul>
-                    <li>do this</li> 
-                    <li>do that</li>
+            <div class="mb-4">
+                <h3>1.2 Key Recommendations</h3>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">do this</li> 
+                    <li class="list-group-item">do that</li>
                 </ul>
+            </div>
+        </div>
 
-        <h2 class="text-left my-5">2. Attacks Details</h2>
-        <!-- Attack Sections (To be modified manually) -->
-        <div id="attack-sections">
-            <h3>2.1. Attack 1 – 20% Block Rate</h3>
+        <div class="page-break"></div>
+
+        <div class="report-section mt-5">
+            <h2 class="section-header">2. Detailed Attack Analysis</h2>
+            <h3 class="text-left my-4">2.1. Attack 1 – 20% Block Rate</h3>
+            <p><strong>Description:</strong> 
+            <p> description of this attack.</p>
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Result</th>
-                        <th>Target’s Response</th>
+                        <th>Target's Response</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,14 +87,18 @@
                     <li>do that</li>
                 </ul>
             </p>
+
+            <div class="page-break"></div>
             
             <h3>2.2. Attack 2 – 50% Block Rate</h3>
+            <p><strong>Description:</strong> 
+            <p> description of this attack.</p>    
             <table class="table table-bordered">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Result</th>
-                            <th>Target’s Response</th>
+                            <th>Target's Response</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -106,12 +128,16 @@
                 </ul>
             </p>
 
+            <div class="page-break"></div>
+
             <h3>2.3. Attack 3 – 100% Block Rate</h3>
+            <p><strong>Description:</strong> 
+            <p> description of this attack.</p>
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Result</th>
-                        <th>Target’s Response</th>
+                        <th>Target's Response</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -126,9 +152,24 @@
                 </tbody>
             </table>
 
-    </div>
+        </div>
         
         <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const tables = document.querySelectorAll('.table');
+                tables.forEach(table => {
+                    const rows = table.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const resultCell = row.cells[0];
+                        if (resultCell.textContent.trim().toLowerCase() === 'blocked') {
+                            row.classList.add('row-blocked');
+                        } else if (resultCell.textContent.trim().toLowerCase() === 'succeeded') {
+                            row.classList.add('row-succeeded');
+                        }
+                    });
+                });
+            });
+            
             // Chart Data (Modify manually to match chosen attacks)
             const attackLabels = ['Attack Name 1', 'Attack Name 2', 'Attack Name 3'];
             const blockedData = [1, 2, 2]; 
@@ -143,14 +184,18 @@
                         {
                             label: 'Blocked',
                             data: blockedData,
-                            backgroundColor: 'green'
+                            backgroundColor: '#2e7d32'
                         },
                         {
                             label: 'Succeeded',
                             data: succeededData,
-                            backgroundColor: 'red'
+                            backgroundColor: '#c62828'
                         }
                     ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true
                 }
             });
             
@@ -160,12 +205,74 @@
                 data: {
                     labels: ['Blocked', 'Succeeded'],
                     datasets: [{
-                        data: [5, 6], // Total number across all attacks
-                        backgroundColor: ['green', 'red']
+                        data: [5, 6],
+                        backgroundColor: ['#2e7d32', '#c62828']
                     }]
+                },
+                options: {
+                    maintainAspectRatio: true,
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
                 }
             });
         </script>
     </div>
+
+    <style>
+        .report-section {
+            margin-bottom: 2rem;
+        }
+        .section-header {
+            color: #1a2634;
+            border-bottom: 2px solid #2c5282;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .list-group-item {
+            background-color: transparent;
+            border: none;
+            padding-left: 0;
+        }
+        .page-break {
+            page-break-after: always;
+            margin: 2rem 0;
+            border-bottom: 1px dashed #9e9e9e;
+        }
+        @media print {
+            .page-break {
+                height: 0;
+                page-break-before: always;
+            }
+        }
+        h3 {
+            color: #1a2634;  /* Same dark color as section headers */
+        }
+        .table {
+            border-color: #000;
+        }
+        
+        .table th, .table td {
+            border-color: #000 !important;
+        }
+        
+        .row-blocked td {
+            color: #2e7d32;
+            font-weight: 500;
+        }
+        
+        .row-succeeded td {
+            color: #c62828;
+            font-weight: 500;
+        }
+    </style>
 </body>
 </html>
