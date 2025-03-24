@@ -67,6 +67,8 @@ class BrainComponent:
             attack.chatbot_output.append(response["data"])
             self.successful_attacks.append(attack)
         else:
+            if response["status"] == 200 and response["data"]:
+                attack.chatbot_output.append(response["data"])
             self.failed_attacks.append(attack)
 
         self.logger.info(f"Attack {attack.name} was successful: {is_attack_successful}")
