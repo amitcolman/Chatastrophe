@@ -1,3 +1,4 @@
 /.venv/
 /.idea/
 report.html
+__pycache__
