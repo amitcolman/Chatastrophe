@@ -54,28 +54,34 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
+                        <th>Description</th>
                         <th>Result</th>
                         <th>Target's Response</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td>attack description</td>
                         <td>Blocked</td>
                         <td>no</td>
                     </tr>
                     <tr>
+                        <td>attack description</td>
                         <td>Succeeded</td>
                         <td>here</td>
                     </tr>
                     <tr>
+                        <td>attack description</td>
                         <td>Succeeded</td>
                         <td>here</td>
                     </tr>
                     <tr>
+                        <td>attack description</td>
                         <td>Succeeded</td>
                         <td>here</td>
                     </tr>
                     <tr>
+                        <td>attack description</td>
                         <td>Succeeded</td>
                         <td>here</td>
                     </tr>
@@ -94,32 +100,36 @@
             <p><strong>Description:</strong> 
             <p> description of this attack.</p>    
             <table class="table table-bordered">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Result</th>
-                            <th>Target's Response</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Blocked</td>
-                            <td>no</td>
-                        </tr>
-                        <tr>
-                            <td>Succeeded</td>
-                            <td>here</td>
-                        </tr>
-                        <tr>
-                            <td>Blocked</td>
-                            <td>no</td>
-                        </tr>
-                        <tr>
-                            <td>Succeeded</td>
-                            <td>here</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Result</th>
+                        <th>Target's Response</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>attack description</td>
+                        <td>Blocked</td>
+                        <td>no</td>
+                    </tr>
+                    <tr>
+                        <td>attack description</td>
+                        <td>Succeeded</td>
+                        <td>here</td>
+                    </tr>
+                    <tr>
+                        <td>attack description</td>
+                        <td>Blocked</td>
+                        <td>no</td>
+                    </tr>
+                    <tr>
+                        <td>attack description</td>
+                        <td>Succeeded</td>
+                        <td>here</td>
+                    </tr>
+                </tbody>
+            </table>
     
             <p><strong>Mitigations:</strong> 
                 <ul>
@@ -136,16 +146,19 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
+                        <th>Description</th>
                         <th>Result</th>
                         <th>Target's Response</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td>attack description</td>
                         <td>Blocked</td>
                         <td>no</td>
                     </tr>
                     <tr>
+                        <td>attack description</td>
                         <td>Succeeded</td>
                         <td>here</td>
                     </tr>
@@ -160,7 +173,7 @@
                 tables.forEach(table => {
                     const rows = table.querySelectorAll('tbody tr');
                     rows.forEach(row => {
-                        const resultCell = row.cells[0];
+                        const resultCell = row.cells[1];
                         if (resultCell.textContent.trim().toLowerCase() === 'blocked') {
                             row.classList.add('row-blocked');
                         } else if (resultCell.textContent.trim().toLowerCase() === 'succeeded') {
@@ -254,7 +267,7 @@
             }
         }
         h3 {
-            color: #1a2634;  /* Same dark color as section headers */
+            color: #1a2634;
         }
         .table {
             border-color: #000;
