@@ -4,6 +4,7 @@ from typing import Optional
 
 
 class Severity(Enum):
+    INFORMATIONAL = "Informational"
     LOW = "Low"
     MEDIUM = "Medium"
     HIGH = "High"

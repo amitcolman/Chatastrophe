@@ -14,4 +14,4 @@ attacks:
       - information
       - user
       - email
-    severity: 2
+    severity: MEDIUM

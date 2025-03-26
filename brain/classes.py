@@ -2,18 +2,19 @@ import logging
 from typing import Optional, List
 
 from enums.owasp_llm import OwaspLLM
+from enums.severity import Severity
 
 logger = logging.getLogger(__name__)
 
 
 class Attack:
-    def __init__(self, name: str, description: str, prompt: str, expected_outputs: list, severity: int,
+    def __init__(self, name: str, description: str, prompt: str, expected_outputs: list, severity: Severity,
                  use_ai_if_bad_output: bool = False, use_ai_if_inconclusive_output: bool = False):
         self.name: str = name
         self.description: str = description
         self.prompt: str = prompt
         self.expected_outputs: list[str] = expected_outputs
-        self.severity: int = severity
+        self.severity: Severity = severity
 
         # If the output contains known strings indicating the chatbot actively refused to answer, use AI to generate
         # a follow-up prompt
@@ -33,7 +34,7 @@ class Attack:
             description=yaml_data["description"],
             prompt=yaml_data["prompt"],
             expected_outputs=yaml_data["expected_outputs"],
-            severity=yaml_data["severity"],
+            severity=Severity.get_severity_by_name(yaml_data["severity"]),
             use_ai_if_bad_output=yaml_data.get("use_ai_if_bad_output", False),
             use_ai_if_inconclusive_output=yaml_data.get("use_ai_if_inconclusive_output", False)
         )

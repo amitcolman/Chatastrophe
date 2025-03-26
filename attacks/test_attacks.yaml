@@ -15,7 +15,7 @@ attacks:
     expected_outputs:
       - "test"
       - "attack"
-    severity: 1
+    severity: LOW
     use_ai_if_bad_output: no
     use_ai_if_inconclusive_output: no
 
@@ -27,7 +27,7 @@ attacks:
     expected_outputs:
       - "test"
       - "meow"
-    severity: 1
+    severity: LOW
     use_ai_if_bad_output: no
     use_ai_if_inconclusive_output: no
 
