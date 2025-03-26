@@ -30,14 +30,14 @@ class HTMLTemplates:
     RESPONSE_BLOCKED = r"""<tr>
                         <td>{description}</td>
                         <td>Blocked</td>
-                        <td><span class="severity-badge severity-{severity_lowercase}">{severity}</span></td>
+                        <td>-</td>
                         <td>{message}</td>
                     </tr>"""
 
     RESPONSE_SUCCEEDED = r"""<tr>
                         <td>{description}</td>
                         <td>Succeeded</td>
-                        <td><span class="severity-badge severity-{severity_lowercase}">{severity}</span></td>
+                        <td><span class="severity-badge severity-{severity}">{severity}</span></td>
                         <td>{message}</td>
                     </tr>"""
 
@@ -140,13 +140,19 @@ class ReportGenerator:
         """Format a single attack response"""
         template = self.templates.RESPONSE_SUCCEEDED if succeeded else self.templates.RESPONSE_BLOCKED
         message = attack.chatbot_output[-1] if attack.chatbot_output else "N/A"
-        severity = attack.severity.name
-        return template.format(
-            description=attack.description,
-            message=message,
-            severity=severity,
-            severity_lowercase=severity.lower()
-        )
+        
+        if succeeded:
+            severity = attack.severity.name
+            return template.format(
+                description=attack.description,
+                message=message,
+                severity=severity
+            )
+        else:
+            return template.format(
+                description=attack.description,
+                message=message
+            )
 
     def _prepare_chart_data(self, category_stats: Dict[str, CategoryStats]) -> ChartData:
         """Prepare data for charts"""
