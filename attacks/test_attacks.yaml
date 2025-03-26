@@ -2,6 +2,9 @@
 name: Test Attacks
 description: These are test attacks
 category: PROMPT_INJECTION
+mitigations:
+  - test
+  - another test
 
 attacks:
   - name: Test Attack 1

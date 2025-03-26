@@ -40,10 +40,11 @@ class Attack:
 
 
 class AttackCategory:
-    def __init__(self, name: str, description: str, category: OwaspLLM, attacks: list[Attack]):
+    def __init__(self, name: str, description: str, category: OwaspLLM, mitigations: list[str], attacks: list[Attack]):
         self.name = name
         self.description = description
         self.category = category
+        self.mitigations = mitigations
         self.attacks = attacks
 
     @staticmethod
@@ -58,5 +59,6 @@ class AttackCategory:
             name=yaml_data["name"],
             description=yaml_data["description"],
             category=OwaspLLM.get_category_by_name(yaml_data["category"]),
+            mitigations=yaml_data.get("mitigations", []),
             attacks=attacks
         )

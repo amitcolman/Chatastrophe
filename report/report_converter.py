@@ -19,6 +19,7 @@ class CategoryStats:
     succeeded: int
     responses: List[str]
     description: str
+    mitigations: List[str]
     block_percentage: int
 
 
@@ -98,11 +99,15 @@ class ReportGenerator:
 
     def _analyze_categories(self) -> Dict[str, CategoryStats]:
         """Analyze attack results by category"""
-        category_data = defaultdict(lambda: CategoryStats(0, 0, [], "", 0))
+        category_data = defaultdict(lambda: CategoryStats(0, 0, [], "", [], 0))
 
         # Set descriptions
         for category in self.brain.attack_categories:
             category_data[category.name].description = category.description
+
+        # Set mitigations
+        for category in self.brain.attack_categories:
+            category_data[category.name].mitigations = category.mitigations
 
         # Analyze successful attacks
         for attack in self.brain.successful_attacks:
@@ -151,7 +156,8 @@ class ReportGenerator:
                     block_percentage=stats.block_percentage,
                     attack_description=stats.description,
                     response_blocks="\n".join(stats.responses),
-                    mitigations=self.templates.MITIGATION.format(mitigation="Implement proper input validation")
+                    mitigations="\n".join(
+                        self.templates.MITIGATION.format(mitigation=mitigation) for mitigation in stats.mitigations)
                 )
             )
         return "\n".join(analysis_sections)
@@ -183,4 +189,3 @@ class ReportGenerator:
             f.write(report_html)
 
         return report_html
-

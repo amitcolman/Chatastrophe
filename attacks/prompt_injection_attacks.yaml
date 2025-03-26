@@ -1,6 +1,8 @@
 name: LLM01:2025 Prompt Injection
 description: User prompts alter the LLM’s behavior or output in unintended ways
 category: PROMPT_INJECTION
+mitigations:
+  - test
 
 attacks:
   - name: Direct Injection 1
