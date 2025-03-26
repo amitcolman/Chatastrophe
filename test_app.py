@@ -3,6 +3,7 @@ import logging
 import os
 import sys
 from brain.brain import BrainComponent
+from report.report_converter import ReportGenerator
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
@@ -34,4 +35,10 @@ if __name__ == "__main__":
     brain = BrainComponent(chatbot_name="rag-chatbot", chatbot_url="http://localhost:5000/rag-chatbot/ask")
     # The first attack fails
     # brain.execute_attack(brain.attack_categories[0].attacks[0])
-    brain.execute_attack(brain.attack_categories[0].attacks[1])
+    # brain.execute_attack(brain.attack_categories[0].attacks[1])
+    for category in brain.attack_categories:
+        for attack in category.attacks:
+            brain.execute_attack(attack)
+
+    generator = ReportGenerator(brain)
+    report = generator.generate_report()

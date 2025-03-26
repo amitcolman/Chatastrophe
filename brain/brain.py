@@ -105,3 +105,6 @@ class BrainComponent:
                 return False
 
         return True
+
+    def convert_results_to_report(self):
+        pass

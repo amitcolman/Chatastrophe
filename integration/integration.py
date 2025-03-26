@@ -30,15 +30,15 @@ class IntegrationComponent:
             try:
                 response = self.session.post(url, json={"question": message}, headers=self.headers)
                 response.raise_for_status()
-                return {"status": 200, "response": response.json().get("answer")}
+                return {"status": 200, "data": response.json().get("answer")}
             except Exception as e:
                 self.logger.warning(f"API connection failed (attempt {attempt + 1}/{max_retries}): {str(e)}")
-                if attempt == max_retries:
+                if attempt == max_retries-1:
                     return {"status": 503, "data": "Unable to connect to the chatbot after multiple attempts"}
 
     def send_attack_command(self, prompt: str) -> Dict[str, Any]:
         try:
             response = self.send_message_api(url=self.url, message=prompt)
-            return {"status": response["status"], "data": response["response"]}
+            return {"status": response["status"], "data": response["data"]}
         except Exception as e:
             return {"status": 400, "data": {"error": str(e)}}
