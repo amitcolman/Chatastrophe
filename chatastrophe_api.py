@@ -65,13 +65,13 @@ def perform_attack():
 
 @app.route('/get-report', methods=['GET'])
 def get_report():
-    data = request.args
+    data = request.get_json()
     attack_id = data.get("attack_id", "")
 
     # Check if the attack_id is running in the background
     for thread in enumerate():
         if thread.name == attack_id:
-            return jsonify({"status": "running"}), 200
+            return jsonify({"status": "Attack in progress"}), 200
 
     # Check if the report file exists
     report_file_path = f"./reports/{attack_id}.html"
