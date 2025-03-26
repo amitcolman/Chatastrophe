@@ -1,9 +1,10 @@
 import os
+from collections import defaultdict
 from dataclasses import dataclass
-from typing import List, Dict, Tuple
+from datetime import datetime
+from typing import List, Dict
 
 from brain.brain import BrainComponent
-from collections import defaultdict
 
 
 @dataclass
@@ -173,6 +174,9 @@ class ReportGenerator:
         with open(os.path.join(os.path.dirname(__file__), "template_to_format.html"), "r") as f:
             template = f.read()
 
+        # Add current date to the template
+        current_date = datetime.now().strftime("%B %d, %Y")
+        
         report_html = (template
                        .replace("{chatastrophe_overall_score}", str(summary_stats["score"]))
                        .replace("{chatastrophe_key_recommendations}", recommendations)
@@ -182,6 +186,7 @@ class ReportGenerator:
                        .replace("{chatastrophe_succeeded_data}", str(chart_data.succeeded_data))
                        .replace("{chatastrophe_blocked_attacks_number}", str(summary_stats["blocked"]))
                        .replace("{chatastrophe_succeeded_attacks_number}", str(summary_stats["succeeded"]))
+                       .replace("{current_date}", current_date)
                        )
 
         # TODO: Debug output, remove later
