@@ -1,17 +1,37 @@
 chatbots:
   - name: rag-chatbot
     type: api
+    endpoint: ""
     fields:
       url: string
     headers:
       Connection: keep-alive
       Protocol: HTTP/1.1
+    body:
+      request: question
+      response: answer
+  
   - name: gdpr-chatbot
     type: api
+    endpoint: ""
     fields:
       url: string
     headers:
       Connection: keep-alive
       Protocol: HTTP/1.1
+    body:
+      request: question
+      response: answer
+  
+  - name: Broken Chatbot
+    type: api
+    endpoint: /prompt-leaking-lv1
+    fields:
+      url: string
+    headers:
+    body:
+      request: text
+      response: text
+      
 
 

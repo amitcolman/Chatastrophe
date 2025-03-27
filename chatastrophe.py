@@ -40,7 +40,7 @@ class Chatastrophe:
 
     def run(self):
         self.logger.info("Sleeping for 1 minute...")
-        time.sleep(60)
+        #time.sleep(60)
         self.logger.info("Chatastrophe app started")
         brain = BrainComponent(chatbot_name=self.chatbot_name, chatbot_url=self.chatbot_url)
         # The first attack fails
