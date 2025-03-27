@@ -11,26 +11,30 @@ class IntegrationComponent:
         self.session = requests.Session()
         self.name = name
         self.url = url
-        self.headers = self.load_chatbot_headers(name)
-
-    def load_chatbot_headers(self, name):
+        self.headers = self.get_chatbot_fields(name, "headers")
+        self.endpoint = self.get_chatbot_fields(name, "endpoint")
+        self.body = self.get_chatbot_fields(name, "body")
+    
+    def get_chatbot_fields(self, name: str, field: str) -> str:
         """
-        Load chatbot headers from config file
+        Get chatbot fields from config file
         """
         with open("./Chatbots/chatbots.yaml", "r") as f:
             chatbots_yaml = yaml.safe_load(f)
             for chatbot in chatbots_yaml['chatbots']:
                 if chatbot.get('name') == name:
-                    return chatbot.get('headers')
+                    return chatbot.get(field)
 
+    
     def send_message_api(self, url: str, message: str, max_retries: int = 3) -> Dict[str, Any]:
         """Send message to chatbot using REST API with retries"""
 
         for attempt in range(max_retries):
             try:
-                response = self.session.post(url, json={"question": message}, headers=self.headers)
+                url = f"{url}{self.endpoint}"
+                response = self.session.post(url, json={self.body['request']: message}, headers=self.headers)
                 response.raise_for_status()
-                return {"status": 200, "data": response.json().get("answer")}
+                return {"status": 200, "data": response.json().get(self.body['response'])}
             except Exception as e:
                 self.logger.warning(f"API connection failed (attempt {attempt + 1}/{max_retries}): {str(e)}")
                 if attempt == max_retries-1:
