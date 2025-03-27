@@ -2,7 +2,12 @@ name: LLM01:2025 Prompt Injection
 description: User prompts alter the LLM’s behavior or output in unintended ways
 category: PROMPT_INJECTION
 mitigations:
-  - test
+    - Provide specific instructions about the model's role, capabilities, and limitations
+    - Define and validate expected output formats
+    - Define sensitive categories and construct rules for identifying and handling such content
+    - Restrict the model's access privileges to the minimum necessary for its intended operations
+    - Require human approval for high-risk actions
+    - Perform regular penetration testing and breach simulations
 
 attacks:
   - name: Direct Injection 1
