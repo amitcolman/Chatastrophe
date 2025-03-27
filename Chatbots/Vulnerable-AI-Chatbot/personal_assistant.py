@@ -13,8 +13,8 @@ from get_llm import get_llm
 
 # Create a Flask web application
 app = Flask(__name__)
-os.environ["reveal_secret"] = ""
-os.environ["reveal_owner"] = ""
+os.environ["reveal_secret"] = "yes"
+os.environ["reveal_owner"] = "yes"
 flask.cli.show_server_banner = lambda *args: None
 
 

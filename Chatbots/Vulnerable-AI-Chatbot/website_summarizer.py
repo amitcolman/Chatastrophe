@@ -17,7 +17,7 @@ template = """Question: {question}
 
 Answer: what website it is."""
 
-os.environ["reveal_running_process"] = ""
+os.environ["reveal_running_process"] = "yes"
 
 
 def chatCompletion(query):
@@ -26,8 +26,8 @@ def chatCompletion(query):
     llm = get_llm()
     llm_chain = LLMChain(prompt=prompt, llm=llm)
 
-    if ';' in query:
-        return "{0} contains disallowed characters. Please try entering a valid website link.".format(query)
+    # if ';' in query:
+        # return "{0} contains disallowed characters. Please try entering a valid website link.".format(query)
 
     if 'ps' in re.split('&&', query.replace(' ', '')):
         if os.environ["reveal_running_process"] != "yes":
