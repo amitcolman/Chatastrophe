@@ -1,4 +1,3 @@
-
 from flask import Flask
 import yaml
 from flask import request, jsonify
@@ -8,11 +7,12 @@ from chatastrophe import Chatastrophe
 from enums.owasp_llm import OwaspLLM
 import os
 
-
 app = Flask(__name__)
+
 
 def is_valid_token(token):
     return token == "chatastrophe_token"
+
 
 @app.before_request
 def check_auth():
@@ -21,7 +21,7 @@ def check_auth():
     token = request.headers.get("Authorization")
     if not is_valid_token(token):
         return jsonify({"error": "Unauthorized"}), 401
-    
+
 
 def get_chatbots():
     with open('./Chatbots/chatbots.yaml', 'r') as file:
@@ -30,7 +30,8 @@ def get_chatbots():
 
 
 def run_chatastrophe(chatbot_name, chatbot_url, attack_types, uuid):
-    chatastrophe = Chatastrophe(uuid=uuid, chatbot_name=chatbot_name, chatbot_url=chatbot_url, attack_types=attack_types)
+    chatastrophe = Chatastrophe(uuid=uuid, chatbot_name=chatbot_name, chatbot_url=chatbot_url,
+                                attack_types=attack_types)
     chatastrophe.run()
     return
 
@@ -57,11 +58,12 @@ def perform_attack():
     attack_id = str(uuid.uuid4())
 
     # Start the BrainComponent in a background thread
-    chatastrophe = Thread(target=run_chatastrophe, args=(chatbot_name, chatbot_url, attack_types, attack_id), name=f"{attack_id}")
+    chatastrophe = Thread(target=run_chatastrophe, args=(chatbot_name, chatbot_url, attack_types, attack_id),
+                          name=f"{attack_id}")
     chatastrophe.start()
 
     return jsonify({"attack_id": attack_id}), 200
-  
+
 
 @app.route('/get-report', methods=['GET'])
 def get_report():
@@ -80,8 +82,8 @@ def get_report():
             report_data = file.read()
         return jsonify({"status": "completed", "report": report_data}), 200
 
-    
     return jsonify({"status": "attack not found"}), 404
+
 
 @app.route('/get-available-chatbots', methods=['GET'])
 def get_available_chatbots():
@@ -112,6 +114,6 @@ def get_attack_categories():
     attack_categories = OwaspLLM.get_all_categories()
     return jsonify(attack_categories), 200
 
-    
+
 if __name__ == '__main__':
     app.run(debug=True, port=3333)
