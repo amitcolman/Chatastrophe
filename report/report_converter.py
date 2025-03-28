@@ -29,14 +29,14 @@ class HTMLTemplates:
 
     RESPONSE_BLOCKED = r"""<tr>
                         <td>{description}</td>
-                        <td>Blocked</td>
+                        <td>Protected</td>
                         <td>-</td>
                         <td>{message}</td>
                     </tr>"""
 
     RESPONSE_SUCCEEDED = r"""<tr>
                         <td>{description}</td>
-                        <td>Succeeded</td>
+                        <td>Compromised</td>
                         <td><span class="severity-badge severity-{severity}">{severity}</span></td>
                         <td>{message}</td>
                     </tr>"""

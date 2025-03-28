@@ -68,10 +68,10 @@
                     const rows = table.querySelectorAll('tbody tr');
                     rows.forEach(row => {
                         const resultCell = row.cells[1];
-                        if (resultCell.textContent.trim().toLowerCase() === 'blocked') {
-                            row.classList.add('row-blocked');
-                        } else if (resultCell.textContent.trim().toLowerCase() === 'succeeded') {
-                            row.classList.add('row-succeeded');
+                        if (resultCell.textContent.trim().toLowerCase() === 'protected') {
+                            row.classList.add('row-protected');
+                        } else if (resultCell.textContent.trim().toLowerCase() === 'compromised') {
+                            row.classList.add('row-compromised');
                         }
                     });
                 });
@@ -89,14 +89,14 @@
                     labels: attackLabels,
                     datasets: [
                         {
-                            label: 'Blocked',
+                            label: 'Protected',
                             data: blockedData,
                             backgroundColor: '#2e7d32'
                         },
                         {
-                            label: 'Succeeded',
+                            label: 'Compromised',
                             data: succeededData,
-                            backgroundColor: '#c62828'
+                            backgroundColor: '#dc2626'
                         }
                     ]
                 },
@@ -110,10 +110,10 @@
             new Chart(ctxPie, {
                 type: 'pie',
                 data: {
-                    labels: ['Blocked', 'Succeeded'],
+                    labels: ['Protected', 'Compromised'],
                     datasets: [{
                         data: [{chatastrophe_blocked_attacks_number}, {chatastrophe_succeeded_attacks_number}],
-                        backgroundColor: ['#2e7d32', '#c62828']
+                        backgroundColor: ['#2e7d32', '#dc2626']
                     }]
                 },
                 options: {
@@ -255,13 +255,13 @@
             font-weight: 600;
         }
 
-        .row-blocked td {
+        .row-protected td {
             color: #059669;
             background-color: #ecfdf5;
         }
 
-        .row-succeeded td {
-            color: #dc2626;
+        .row-compromised td {
+            color: #991b1b;
             background-color: #fef2f2;
         }
 
