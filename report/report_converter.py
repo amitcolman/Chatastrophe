@@ -105,13 +105,11 @@ class ReportGenerator:
         """Analyze attack results by category"""
         category_data = defaultdict(lambda: CategoryStats(0, 0, [], "", [], 0))
 
-        # Set descriptions
+        # Set descriptions and mitigations
         for category in self.brain.attack_categories:
-            category_data[category.name].description = category.description
-
-        # Set mitigations
-        for category in self.brain.attack_categories:
-            category_data[category.name].mitigations = category.mitigations
+            if any(attack in category.attacks for attack in self.brain.successful_attacks + self.brain.failed_attacks):
+                category_data[category.name].description = category.description
+                category_data[category.name].mitigations = category.mitigations
 
         # Analyze successful attacks
         for attack in self.brain.successful_attacks:

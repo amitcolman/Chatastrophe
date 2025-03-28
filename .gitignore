@@ -2,3 +2,4 @@
 /.idea/
 report.html
 __pycache__
+/reports/*

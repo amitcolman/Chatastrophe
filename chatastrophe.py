@@ -39,14 +39,11 @@ class Chatastrophe:
 
 
     def run(self):
-        self.logger.info("Sleeping for 1 minute...")
-        #time.sleep(60)
         self.logger.info("Chatastrophe app started")
         brain = BrainComponent(chatbot_name=self.chatbot_name, chatbot_url=self.chatbot_url)
-        # The first attack fails
-        # brain.execute_attack(brain.attack_categories[0].attacks[0])
-        # brain.execute_attack(brain.attack_categories[0].attacks[1])
-        for category in brain.attack_categories:
+        relevant_categories = [category for category in brain.attack_categories if category.category.name in self.attack_types]
+
+        for category in relevant_categories:
             for attack in category.attacks:
                 brain.execute_attack(attack)
 
