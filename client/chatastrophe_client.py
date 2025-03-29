@@ -119,7 +119,7 @@ async def get_report(attack_id):
                                 return data.get("report").encode()
                             elif data.get("status") == "Attack in progress":
                                 status.update("[bold yellow]Attack in progress...")
-                                await asyncio.sleep(2)  # Wait 2 seconds before checking again
+                                await asyncio.sleep(10)  # Wait 2 seconds before checking again
                             else:
                                 console.print(f"[red]Error: {data.get('status')}[/red]")
                                 return None

@@ -41,7 +41,7 @@ class Chatastrophe:
     def run(self):
         self.logger.info("Chatastrophe app started")
         brain = BrainComponent(chatbot_name=self.chatbot_name, chatbot_url=self.chatbot_url)
-        relevant_categories = [category for category in brain.attack_categories if category.category.name in self.attack_types]
+        relevant_categories = [category for category in brain.attack_categories if category.name in self.attack_types]
 
         for category in relevant_categories:
             for attack in category.attacks:
