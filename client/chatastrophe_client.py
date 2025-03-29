@@ -83,13 +83,9 @@ def interactive_input(scenarios, chatbot_types):
         "[pale_green1]Enter chatbot type[/pale_green1]",
         choices=chatbot_types
     )
-    test_url = test_url("")
-    while not test_url:
-        url = Prompt.ask(
-            "[pale_green1]Enter chatbot URL[/pale_green1]"
-        )
-        if not test_url(url):
-            console.print("[red]Invalid URL. Please try again.[/red]")
+    url = Prompt.ask(
+        "[pale_green1]Enter chatbot URL[/pale_green1]"
+    )
     filename = Prompt.ask(
         "[pale_green1]Enter report file path[/pale_green1]",
         default=DEFAULT_FILENAME
@@ -107,8 +103,7 @@ def interactive_input(scenarios, chatbot_types):
     input_scenarios = Prompt.ask(
         "[bright_green]Select attack scenarios (comma-separated numbers, or 0 for all)[/bright_green]",
         default="0",
-        choices=range(len(scenarios) + 1)
-        )
+    )
     if input_scenarios == '0':
         selected_scenarios = scenarios
     else:
