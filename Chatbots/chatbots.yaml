@@ -25,7 +25,7 @@ chatbots:
   
   - name: Broken Chatbot
     type: api
-    endpoint: /prompt-leaking-lv1
+    endpoint: /llm4shell-lv1
     fields:
       url: string
     headers:

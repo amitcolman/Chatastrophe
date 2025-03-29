@@ -14,7 +14,6 @@ class OwaspLLM(Enum):
     VECTOR_AND_EMBEDDING_WEAKNESSES = "LLM08:2025 Vector and Embedding Weaknesses"
     MISINFORMATION = "LLM09:2025 Misinformation"
     UNBOUNDED_CONSUMPTION = "LLM10:2025 Unbounded Consumption"
-    TEST = "TEST"
 
     @staticmethod
     def get_all_categories() -> list[str]:
