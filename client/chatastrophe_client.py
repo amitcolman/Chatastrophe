@@ -32,7 +32,7 @@ def test_url(url):
     try:
         requests.get(url, timeout=5)
         return True
-    except requests.RequestException:
+    except requests.RequestException as e:
         return False
     
 
@@ -86,6 +86,11 @@ def interactive_input(scenarios, chatbot_types):
     url = Prompt.ask(
         "[pale_green1]Enter chatbot URL[/pale_green1]"
     )
+    while not test_url(url):
+        console.print("[red]Invalid URL. Please try again.[/red]")
+        url = Prompt.ask(
+        "[pale_green1]Enter chatbot URL[/pale_green1]"
+    )
     filename = Prompt.ask(
         "[pale_green1]Enter report file path[/pale_green1]",
         default=DEFAULT_FILENAME
@@ -95,24 +100,31 @@ def interactive_input(scenarios, chatbot_types):
         default=DEFAULT_FORMAT,
         choices=AVAILABLE_FORMATS
     )
-
     console.print("\n[bold bright_green]Available Attack Scenarios:[/bold bright_green]")
     for i, scenario in enumerate(scenarios, 1):
         console.print(f"[pale_green1]{i}. {scenario}[/pale_green1]")
-    input_scenarios = ""
     input_scenarios = Prompt.ask(
         "[bright_green]Select attack scenarios (comma-separated numbers, or 0 for all)[/bright_green]",
         default="0",
     )
-    if input_scenarios == '0':
-        selected_scenarios = scenarios
-    else:
-        selected_scenarios = []
-        for i in input_scenarios.split(","):
-            if i.isdigit() and 1 <= int(i) <= len(scenarios):
-                selected_scenarios.append(scenarios[int(i) - 1])
-    return type, url, selected_scenarios, filename, format
-
+    while True:
+        print(f"scenario: {input_scenarios}")
+        if input_scenarios == '0':
+            selected_scenarios = scenarios
+        else:
+            selected_scenarios = []
+            for i in input_scenarios.split(","):
+                if not(i.isdigit()):
+                    console.print(f"[red]Invalid scenarios. Please try again.[/red]")
+                    input_scenarios = Prompt.ask(
+                        "[bright_green]Select attack scenarios (comma-separated numbers, or 0 for all)[/bright_green]",
+                        default="0",
+                    )
+                    break
+                if  1 <= int(i) <= len(scenarios):
+                    selected_scenarios.append(scenarios[int(i) - 1])
+        return type, url, selected_scenarios, filename, format
+  
 
 async def perform_attack(type, url, scenarios):
     headers = {"Authorization": API_KEY}
@@ -173,6 +185,9 @@ async def main():
 
     if args.url and args.type:
         url, type = args.url, args.type
+        if not test_url(url):
+            console.print("[red]Invalid URL. Please try again.[/red]")
+            return
         if type not in available_chatbot_types:
             console.print(
                 f"[red]Error: Invalid chatbot type. Please choose from: {', '.join(available_chatbot_types)}[/red]")
@@ -183,7 +198,10 @@ async def main():
             for scenario in args.scenarios:
                 if scenario not in available_scenarios:
                     console.print(
-                        f"[red]Error: {scenario} is not a valid scenario. Please choose from: {', '.join(available_scenarios)}[/red]")
+                        f"[red]Error: {scenario} is not a valid scenario number.\nValid scenarios:[/red]")
+                    console.print(f"[red]0. All Scenarios[/red]")
+                    for i, scenario in enumerate(available_scenarios, 1):
+                        console.print(f"[red]{i}. {scenario}[/red]")
                     return
             scenarios = args.scenarios
         else:

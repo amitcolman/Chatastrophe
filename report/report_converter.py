@@ -43,7 +43,7 @@ class HTMLTemplates:
 
     MITIGATION = r"""<li>{mitigation}</li>"""
 
-    ATTACK_ANALYSIS = r"""<h3 class="text-left my-4">2.1. {attack_category} - {block_percentage}% Block Rate</h3>
+    ATTACK_ANALYSIS = r"""<h3 class="text-left my-4">2.{attack_num}. {attack_category} - {block_percentage}% Block Rate</h3>
             <p><strong>Description:</strong> 
             <p>{attack_description}</p>
             <table class="table table-bordered">
@@ -163,9 +163,10 @@ class ReportGenerator:
     def _generate_detailed_analysis(self, category_stats: Dict[str, CategoryStats]) -> str:
         """Generate the detailed analysis HTML"""
         analysis_sections = []
-        for category_name, stats in category_stats.items():
+        for attack_num, (category_name, stats) in enumerate(category_stats.items(), 1):
             analysis_sections.append(
                 self.templates.ATTACK_ANALYSIS.format(
+                    attack_num=attack_num,
                     attack_category=category_name,
                     block_percentage=stats.block_percentage,
                     attack_description=stats.description,
