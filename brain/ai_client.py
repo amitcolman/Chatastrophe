@@ -35,6 +35,7 @@ class AIClient:
             Attack Details:
             - Attack Name: {attack_name}
             - Attack Description: {attack_description}
+            - Attack Prompt: {attack_prompt}
             {expected_outputs_section}
             - AI Analysis Instructions: {ai_analysis_prompt}
             
@@ -59,7 +60,8 @@ class AIClient:
             Your entire response must be a single, properly formatted JSON object that can be directly parsed.
             The parsing will be done using Python's json.loads() function.
             """,
-            input_variables=["attack_name", "attack_description", "expected_outputs_section", "ai_analysis_prompt", "chatbot_response"]
+            input_variables=["attack_name", "attack_description", "attack_prompt", "expected_outputs_section",
+                             "ai_analysis_prompt", "chatbot_response"]
         )
 
     def analyze_response(self, attack: Attack, response: str) -> Dict[str, Any]:
@@ -88,6 +90,7 @@ class AIClient:
             response = chain.invoke({
                 "attack_name": attack.name,
                 "attack_description": attack.description,
+                "attack_prompt": attack.prompt,
                 "expected_outputs_section": expected_outputs_section,
                 "ai_analysis_prompt": attack.ai_analysis_prompt,
                 "chatbot_response": response
