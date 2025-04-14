@@ -3,3 +3,5 @@
 report.html
 __pycache__
 /reports/*
+.env
+/.env

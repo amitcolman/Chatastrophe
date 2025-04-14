@@ -7,6 +7,8 @@ import yaml
 from integration.integration import IntegrationComponent
 from .classes import AttackCategory, Attack
 from enums.owasp_llm import OwaspLLM
+from dotenv import load_dotenv
+from .ai_client import AIClient
 
 
 class BrainComponent:
@@ -21,6 +23,10 @@ class BrainComponent:
 
         self.successful_attacks: List[Attack] = []
         self.failed_attacks: List[Attack] = []
+
+        self.ai_client = AIClient()
+
+        load_dotenv()
 
     def load_attack_categories(self):
         """
@@ -88,10 +94,6 @@ class BrainComponent:
             self.logger.error("No response received for attack")
             return False
 
-        if not attack.expected_outputs:
-            self.logger.error("No expected outputs defined for attack")
-            return False
-
         if response["status"] != 200:
             return False
 
@@ -100,11 +102,38 @@ class BrainComponent:
             self.logger.error("Invalid response data")
             return False
 
-        for expected_output in attack.expected_outputs:
-            if expected_output.lower() not in data.lower():
+        if not attack.expected_outputs and not attack.use_ai_if_bad_output:
+            self.logger.error("No expected outputs defined for attack")
+            return False
+
+        # First try simple string matching to check if the attack was successful
+        # This is a basic check and may not be reliable
+        if attack.expected_outputs:
+            for expected_output in attack.expected_outputs:
+                if expected_output.lower() in data.lower():
+                    return True
+
+        # If string matching failed and AI analysis is enabled, use AI to analyze
+        if attack.use_ai_if_bad_output:
+            if not attack.ai_analysis_prompt:
+                self.logger.error("No AI analysis prompt defined for attack, but use_ai_if_bad_output is True")
                 return False
 
-        return True
+            self.logger.info(f"Using AI to analyze response for attack: {attack.name}")
+            analysis = self.ai_client.analyze_response(attack=attack, response=data)
+
+            if analysis["success"]:
+                self.logger.info(f"AI analysis determined attack succeeded: {analysis['reason']}")
+                return True
+            elif analysis["blocked"]:
+                self.logger.info(f"AI analysis determined attack was blocked: {analysis['reason']}")
+                return False
+            # elif analysis["follow_up_prompt"]:
+            #     self.logger.info(f"AI suggested follow-up prompt: {analysis['follow_up_prompt']}")
+            #     # Store the follow-up prompt for potential future use
+            #     attack.follow_up_prompt = analysis["follow_up_prompt"]
+
+        return False
 
     def convert_results_to_report(self):
         pass

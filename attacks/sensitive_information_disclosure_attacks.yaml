@@ -8,6 +8,7 @@ mitigations:
   - Apply techniques that add noise to the data or outputs
   - Use decentralized data stored across multiple servers
   - Provide guidance and maintain clear policies on avoiding the input of sensitive information
+
 attacks:
   - name: Information Leakage 1
     description: Attempt to retrieve sensitive information from the system using a command injection

@@ -35,6 +35,10 @@ class Chatastrophe:
         # Silence noisy libraries
         logging.getLogger("requests").setLevel(logging.ERROR)
         logging.getLogger("urllib3").setLevel(logging.ERROR)
+        logging.getLogger("httpx").setLevel(logging.ERROR)
+        logging.getLogger("httpcore").setLevel(logging.ERROR)
+        logging.getLogger("openai").setLevel(logging.WARNING)
+        logging.getLogger("werkzeug").setLevel(logging.WARNING)
 
 
 

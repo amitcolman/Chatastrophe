@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class Attack:
     def __init__(self, name: str, description: str, prompt: str, expected_outputs: list, severity: Severity,
-                 use_ai_if_bad_output: bool = False, use_ai_if_inconclusive_output: bool = False):
+                 ai_analysis_prompt: Optional[str] = None, use_ai_if_bad_output: bool = False):
         self.name: str = name
         self.description: str = description
         self.prompt: str = prompt
@@ -18,11 +18,8 @@ class Attack:
 
         # If the output contains known strings indicating the chatbot actively refused to answer, use AI to generate
         # a follow-up prompt
+        self.ai_analysis_prompt: Optional[str] = ai_analysis_prompt
         self.use_ai_if_bad_output: bool = use_ai_if_bad_output
-
-        # If the output is inconclusive (e.g. "I'm not sure" or "I don't know" or we didn't find bad output),
-        # use AI to generate a follow-up prompt
-        self.use_ai_if_inconclusive_output: bool = use_ai_if_inconclusive_output
 
         # Run-time variables
         self.chatbot_output: List[str] = []
@@ -33,10 +30,10 @@ class Attack:
             name=yaml_data["name"],
             description=yaml_data["description"],
             prompt=yaml_data["prompt"],
-            expected_outputs=yaml_data["expected_outputs"],
+            expected_outputs=yaml_data.get("expected_outputs", []),
             severity=Severity.get_severity_by_name(yaml_data["severity"]),
-            use_ai_if_bad_output=yaml_data.get("use_ai_if_bad_output", False),
-            use_ai_if_inconclusive_output=yaml_data.get("use_ai_if_inconclusive_output", False)
+            ai_analysis_prompt=yaml_data.get("ai_analysis_prompt", None),
+            use_ai_if_bad_output=yaml_data.get("use_ai_if_bad_output", False)
         )
 
 
