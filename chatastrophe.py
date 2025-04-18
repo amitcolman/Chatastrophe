@@ -1,10 +1,10 @@
 import logging
-
 import os
 import sys
 from brain.brain import BrainComponent
 from report.report_converter import ReportGenerator
 import time
+from datetime import datetime
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
@@ -18,20 +18,28 @@ class Chatastrophe:
         self.setup_logging()
         self.logger = logging.getLogger(__name__)
 
-
     def setup_logging(self):
         logging.basicConfig(level=logging.DEBUG)
+        # Create a log file specific to this UUID
+        log_file = f'logs/chatastrophe_{self.uuid}.log'
+        
         # Remove any pre-existing handlers to prevent conflicts
         for handler in logging.root.handlers[:]:
             logging.root.removeHandler(handler)
+            
         # Define a clean log format
         LOG_FORMAT = "%(asctime)s - %(levelname)s - %(name)s - %(message)s"
-        # Configure logging properly
+        
+        # Configure logging with both file and console handlers
         logging.basicConfig(
             level=logging.DEBUG,
             format=LOG_FORMAT,
-            handlers=[logging.StreamHandler(sys.stdout)],  # Ensure logs go to stdout
+            handlers=[
+                logging.FileHandler(log_file),
+                logging.StreamHandler(sys.stdout)
+            ]
         )
+        
         # Silence noisy libraries
         logging.getLogger("requests").setLevel(logging.ERROR)
         logging.getLogger("urllib3").setLevel(logging.ERROR)
@@ -39,8 +47,6 @@ class Chatastrophe:
         logging.getLogger("httpcore").setLevel(logging.ERROR)
         logging.getLogger("openai").setLevel(logging.WARNING)
         logging.getLogger("werkzeug").setLevel(logging.WARNING)
-
-
 
     def run(self):
         self.logger.info("Chatastrophe app started")

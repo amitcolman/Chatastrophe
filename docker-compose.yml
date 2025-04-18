@@ -9,12 +9,11 @@ services:
       - "3333:3333"
     volumes:
       - ./reports:/app/reports
-      
+      - ./logs:/app/logs
     env_file:
       - ./.env
     environment:
       - FLASK_APP=chatastrophe_api.py
-      
     restart: unless-stopped
     networks:
       - chatastrophe-network
