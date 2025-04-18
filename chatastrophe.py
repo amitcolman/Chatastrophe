@@ -21,7 +21,8 @@ class Chatastrophe:
     def setup_logging(self):
         logging.basicConfig(level=logging.DEBUG)
         # Create a log file specific to this UUID
-        log_file = f'logs/chatastrophe_{self.uuid}.log'
+        os.makedirs('logs', exist_ok=True)
+        log_file = f'logs/{self.uuid}.log'
         
         # Remove any pre-existing handlers to prevent conflicts
         for handler in logging.root.handlers[:]:
