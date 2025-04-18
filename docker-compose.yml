@@ -9,12 +9,12 @@ services:
       - "3333:3333"
     volumes:
       - ./reports:/app/reports
-      # If you need to persist other data between runs, add more volume mounts here
+      
     env_file:
       - ./.env
     environment:
       - FLASK_APP=chatastrophe_api.py
-      # Add any environment variables needed by your application here
+      
     restart: unless-stopped
     networks:
       - chatastrophe-network
