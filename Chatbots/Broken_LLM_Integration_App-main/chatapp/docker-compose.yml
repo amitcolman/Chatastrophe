@@ -1,23 +1,23 @@
 version: '3.8'
 
 services:
-  ollama:
-    image: ollama/ollama
-    container_name: ollama
-    networks:
-      - broken_chatbot
-    ports:
-      - "11434:11434"  # Expose the API port to your host
-#    volumes:
-#      - ollama-data:/root/.ollama  # Persist model downloads
-    restart: unless-stopped
-    entrypoint: >
-      bash -c "
-      ollama serve & 
-      sleep 5 && 
-      ollama pull openhermes &&
-      wait
-      "
+#  ollama:
+#    image: ollama/ollama
+#    container_name: ollama
+#    networks:
+#      - broken_chatbot
+#    ports:
+#      - "11434:11434"  # Expose the API port to your host
+##    volumes:
+##      - ollama-data:/root/.ollama  # Persist model downloads
+#    restart: unless-stopped
+#    entrypoint: >
+#      bash -c "
+#      ollama serve &
+#      sleep 5 &&
+#      ollama pull openhermes &&
+#      wait
+#      "
   db:
     container_name: chatbot_mysql
     build:
@@ -120,7 +120,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
-      - ollama
+#      - ollama
     networks:
       - broken_chatbot
 
