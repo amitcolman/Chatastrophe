@@ -8,10 +8,9 @@ def get_llm() -> AzureChatOpenAI:
     os.environ["AZURE_OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
     os.environ["AZURE_OPENAI_ENDPOINT"] = "https://chatastrophe.openai.azure.com"
     llm = AzureChatOpenAI(
-        azure_deployment="gpt-35-turbo",
-        api_version="2025-01-01-preview",
+        azure_deployment="o3-mini",
+        api_version="2024-12-01-preview",
         openai_api_type="azure",
-        temperature=0,
         timeout=None
     )
     return llm
