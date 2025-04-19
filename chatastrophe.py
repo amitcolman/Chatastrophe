@@ -62,7 +62,7 @@ class Chatastrophe:
         report = generator.generate_report()
         
 
-        with open(rf"./reports/{self.uuid}.html", 'w') as file:
+        with open(rf"./reports/{self.uuid}.html", 'w', encoding="utf-8", errors="backslashreplace") as file:
             file.write(report)
         
         self.logger.info(f"Chatastrophe app finished - f{self.uuid}")

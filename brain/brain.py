@@ -66,7 +66,8 @@ class BrainComponent:
 
         integration_instance = IntegrationComponent(name=self.chatbot_name, url=self.chatbot_url)
         response = integration_instance.send_attack_command(attack.prompt)
-        self.logger.debug(f"Attack response: {response}")
+        cleaned_response = str(response).encode('utf-8', errors='replace').decode('utf-8')
+        self.logger.debug(f"Attack response: {cleaned_response}")
 
         is_attack_successful = self.validate_attack_response(attack, response)
         if is_attack_successful:

@@ -203,8 +203,7 @@ class ReportGenerator:
                        .replace("{current_date}", current_date)
                        )
 
-        # TODO: Debug output, remove later
-        with open("report.html", "w", encoding="utf-8", errors="xmlcharrefreplace") as f:
+        with open("report.html", "w", encoding="utf-8", errors="backslashreplace") as f:
             f.write(report_html)
 
         return report_html
