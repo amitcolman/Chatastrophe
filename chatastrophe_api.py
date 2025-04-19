@@ -78,7 +78,7 @@ def get_report():
     # Check if the report file exists
     report_file_path = f"./reports/{attack_id}.html"
     if os.path.exists(report_file_path):
-        with open(report_file_path, 'r') as file:
+        with open(report_file_path, 'r', encoding="utf-8", errors="backslashreplace") as file:
             report_data = file.read()
         return jsonify({"status": "completed", "report": report_data}), 200
 
