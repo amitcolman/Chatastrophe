@@ -2,6 +2,7 @@ chatbots:
   # - name: rag-chatbot
   #   type: api
   #   endpoint: ""
+  #   method: POST
   #   fields:
   #     url: string
   #   headers:
@@ -14,6 +15,7 @@ chatbots:
   # - name: gdpr-chatbot
   #   type: api
   #   endpoint: ""
+  #   method: POST
   #   fields:
   #     url: string
   #   headers:
@@ -26,12 +28,23 @@ chatbots:
   - name: Broken Chatbot
     type: api
     endpoint: /llm4shell-lv1
+    method: POST
     fields:
       url: string
     headers:
     body:
       request: text
       response: text
-      
+
+  - name: Vuln Chatbot
+    type: api
+    endpoint: /get
+    method: GET
+    param_name: msg
+    fields:
+      url: string
+    headers:
+    body:
+      response: response
 
 

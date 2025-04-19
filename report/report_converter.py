@@ -204,7 +204,7 @@ class ReportGenerator:
                        )
 
         # TODO: Debug output, remove later
-        with open("report.html", "w") as f:
+        with open("report.html", "w", encoding="utf-8", errors="xmlcharrefreplace") as f:
             f.write(report_html)
 
         return report_html
