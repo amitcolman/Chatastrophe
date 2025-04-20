@@ -108,7 +108,6 @@ def interactive_input(scenarios, chatbot_types):
         default="0",
     )
     while True:
-        print(f"scenario: {input_scenarios}")
         if input_scenarios == '0':
             selected_scenarios = scenarios
         else:
