@@ -9,6 +9,8 @@ import os
 
 app = Flask(__name__)
 
+# Track active Chatastrophe instances
+active_jobs = {}
 
 def is_valid_token(token):
     return token == "chatastrophe_token"
@@ -30,9 +32,20 @@ def get_chatbots():
 
 
 def run_chatastrophe(chatbot_name, chatbot_url, attack_types, uuid):
+    global active_jobs
     chatastrophe = Chatastrophe(uuid=uuid, chatbot_name=chatbot_name, chatbot_url=chatbot_url,
                                 attack_types=attack_types)
-    chatastrophe.run()
+    active_jobs[uuid] = chatastrophe
+    
+    try:
+        chatastrophe.run()
+        # The save_final_progress method is already called in run()
+    except Exception as e:
+        app.logger.error(f"Error in chatastrophe run: {str(e)}")
+    finally:
+        # Cleanup when done
+        if uuid in active_jobs:
+            del active_jobs[uuid]
     return
 
 
@@ -69,18 +82,48 @@ def perform_attack():
 def get_report():
     data = request.get_json()
     attack_id = data.get("attack_id", "")
+    
+    # Check if the attack is active and get progress
+    if attack_id in active_jobs:
+        progress = active_jobs[attack_id].get_progress()
+        return jsonify({
+            "status": "Attack in progress",
+            "progress": progress
+        }), 200
 
-    # Check if the attack_id is running in the background
+    # Check for thread by name (backward compatibility)
+    thread_running = False
     for thread in enumerate():
         if thread.name == attack_id:
-            return jsonify({"status": "Attack in progress"}), 200
+            thread_running = True
+            break
+    
+    if thread_running:
+        return jsonify({"status": "Attack in progress"}), 200
 
     # Check if the report file exists
     report_file_path = f"./reports/{attack_id}.html"
+    progress_file_path = f"./reports/{attack_id}_progress.json"
+    
     if os.path.exists(report_file_path):
         with open(report_file_path, 'r', encoding="utf-8", errors="backslashreplace") as file:
             report_data = file.read()
-        return jsonify({"status": "completed", "report": report_data}), 200
+        
+        # Try to get final progress data if available
+        final_progress = {}
+        if os.path.exists(progress_file_path):
+            try:
+                with open(progress_file_path, 'r') as progress_file:
+                    import json
+                    final_progress = json.load(progress_file)
+            except Exception as e:
+                app.logger.error(f"Error loading progress data: {str(e)}")
+        
+        return jsonify({
+            "status": "completed", 
+            "report": report_data,
+            "progress": final_progress
+        }), 200
 
     return jsonify({"status": "attack not found"}), 404
 

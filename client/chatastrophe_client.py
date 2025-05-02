@@ -3,10 +3,39 @@ import asyncio
 import aiohttp
 from rich.console import Console
 from rich.prompt import Prompt
+from rich.progress import Progress, BarColumn, TextColumn, ProgressColumn, Task, SpinnerColumn
+from rich.spinner import Spinner
+from rich import box
 import time
 import requests
 
 console = Console()
+
+# Custom spinner column that only shows for incomplete tasks
+class TaskSpinnerColumn(SpinnerColumn):
+    def __init__(self, spinner_name="dots", style="cyan"):
+        super().__init__(spinner_name=spinner_name, style=style)
+        
+    def render(self, task: Task) -> str:
+        """Show spinner only for incomplete tasks."""
+        if task.completed < task.total:
+            return super().render(task)
+        return " "  # Return a space for completed tasks
+
+# Custom progress column to show completed/total count
+class CompletedColumn(ProgressColumn):
+    def render(self, task: Task) -> str:
+        """Show completed/total as text."""
+        if task.description.startswith("[bold green]Overall"):
+            # For overall progress, show completed/total scenarios
+            completed_attacks = int(task.fields.get("completed_attacks", 0))
+            total_attacks = int(task.fields.get("total_attacks", 0))
+            return f"{completed_attacks}/{total_attacks}"
+        else:
+            # For individual scenarios, show actual attack counts
+            completed_attacks = int(task.fields.get("completed_attacks", 0))
+            total_attacks = int(task.fields.get("total_attacks", 0))
+            return f"{completed_attacks}/{total_attacks}"
 
 ASCII_ART = r"""
    ____ _   _    _  _____  _    ____ _____ ____   ___  ____  _   _ _____ 
@@ -144,9 +173,44 @@ async def perform_attack(type, url, scenarios):
             return None
 
 
-async def get_report(attack_id):
+async def get_report(attack_id, scenarios):
     headers = {"Authorization": API_KEY}
-    with console.status("[bold green]Generating report...") as status:
+    
+    # Create progress bars for each category and overall progress
+    with Progress(
+        TaskSpinnerColumn(spinner_name="point", style="bright_cyan"),
+        TextColumn("[bold blue]{task.description:<30}"),
+        BarColumn(bar_width=50),
+        CompletedColumn(),
+        TextColumn("{task.percentage:>3.0f}%"),
+        console=console,
+        expand=True
+    ) as progress:
+        # Create a task for each scenario
+        scenario_tasks = {}
+        for scenario in scenarios:
+            scenario_tasks[scenario] = progress.add_task(
+                f"[cyan]{scenario}", 
+                total=100, 
+                completed=0,
+                completed_attacks=0,
+                total_attacks=0
+            )
+        
+        progress.print("\n")
+        
+        # Create overall progress task
+        overall_task = progress.add_task(
+            "[bold green]Overall Progress", 
+            total=100, 
+            completed=0,
+            completed_attacks=0,
+            total_attacks=0
+        )
+        
+        # Track the total progress
+        check_count = 0
+        
         while True:
             async with aiohttp.ClientSession() as session:
                 try:
@@ -157,11 +221,113 @@ async def get_report(attack_id):
                     ) as response:
                         if response.status == 200:
                             data = await response.json()
+                            
                             if data.get("status") == "completed":
+                                # Handle completed state
+                                overall_completed_attacks = 0
+                                overall_total_attacks = 0
+                                progress_data = data.get("progress", {})
+                                
+                                # First pass - get the correct totals
+                                for scenario in scenarios:
+                                    if scenario in progress_data:
+                                        total_attacks = progress_data[scenario].get("total_attacks", 0)
+                                        overall_total_attacks += total_attacks
+                                
+                                # Process progress data if available
+                                if progress_data:
+                                    for scenario, scenario_progress in progress_data.items():
+                                        if scenario in scenario_tasks:
+                                            # Get final counts - ensure completed matches total for completed state
+                                            total_attacks = scenario_progress.get("total_attacks", 0)
+                                            completed_attacks = total_attacks  # At completion, all attacks should show as complete
+                                            
+                                            # Update progress bar
+                                            progress.update(
+                                                scenario_tasks[scenario],
+                                                completed=100,  # Always 100% at completion
+                                                completed_attacks=completed_attacks,
+                                                total_attacks=total_attacks
+                                            )
+                                            
+                                            # Add to overall totals
+                                            overall_completed_attacks += completed_attacks
+                                
+                                # Update overall progress - ensure values are consistent at completion
+                                progress.update(
+                                    overall_task,
+                                    completed=100,  # Always 100% at completion
+                                    completed_attacks=overall_total_attacks,  # At completion, these should match
+                                    total_attacks=overall_total_attacks
+                                )
+                                
+                                # Allow a moment to see final state
+                                await asyncio.sleep(1)
                                 return data.get("report").encode()
+                                
                             elif data.get("status") == "Attack in progress":
-                                status.update("[bold bright_green]Attack in progress...")
-                                await asyncio.sleep(10)  # Wait 2 seconds before checking again
+                                # Handle in-progress state
+                                if "progress" in data:
+                                    progress_data = data["progress"]
+                                    overall_completed_attacks = 0
+                                    overall_total_attacks = 0
+                                    
+                                    # First, calculate the total attacks across all categories
+                                    for scenario in scenarios:
+                                        if scenario in progress_data:
+                                            overall_total_attacks += progress_data[scenario].get("total_attacks", 0)
+                                    
+                                    # Update progress for each category
+                                    for scenario, scenario_progress in progress_data.items():
+                                        if scenario in scenario_tasks:
+                                            # Get percentage completion
+                                            completed_percent = scenario_progress.get("completed", 0)
+                                            
+                                            # Get attack counts
+                                            completed_attacks = scenario_progress.get("completed_attacks", 0)
+                                            total_attacks = scenario_progress.get("total_attacks", 0)
+                                            
+                                            # Add to overall completed count
+                                            overall_completed_attacks += completed_attacks
+                                            
+                                            # Update the progress bar
+                                            progress.update(
+                                                scenario_tasks[scenario],
+                                                completed=completed_percent,
+                                                completed_attacks=completed_attacks,
+                                                total_attacks=total_attacks
+                                            )
+                                    
+                                    # Calculate overall percentage based on completed/total attacks
+                                    if overall_total_attacks > 0:
+                                        overall_percent = (overall_completed_attacks / overall_total_attacks) * 100
+                                    else:
+                                        # Simple average if no attack counts yet
+                                        overall_percent = sum(
+                                            progress_data[s].get("completed", 0) for s in scenarios if s in progress_data
+                                        ) / len(scenarios) if scenarios else 0
+                                    
+                                    # Update overall progress
+                                    progress.update(
+                                        overall_task,
+                                        completed=overall_percent,
+                                        completed_attacks=overall_completed_attacks,
+                                        total_attacks=overall_total_attacks
+                                    )
+                                else:
+                                    # No progress data yet, show a simple animation
+                                    check_count += 1
+                                    tick = check_count % 10
+                                    for scenario in scenarios:
+                                        progress.update(scenario_tasks[scenario], 
+                                                       completed=tick * 3,  # Just for animation
+                                                       refresh=True)
+                                    progress.update(overall_task, 
+                                                   completed=tick * 3,  # Just for animation
+                                                   refresh=True)
+                                
+                                # Check more frequently for updates
+                                await asyncio.sleep(1)
                             else:
                                 console.print(f"[red]Error: {data.get('status')}[/red]")
                                 return None
@@ -217,7 +383,7 @@ async def main():
         return
 
     # Wait for report and save it
-    report_data = await get_report(attack_id)
+    report_data = await get_report(attack_id, scenarios)
 
     if report_data:
         with open(filename, "wb") as f:
