@@ -21,7 +21,7 @@ class IntegrationComponent:
                 try:
                     data = response.json()
                     if isinstance(data, dict) and not self.params.get('response_field'):
-                        response_field = next((k for k in ['response', 'answer', 'text', 'output', 'result', 'data'] 
+                        response_field = next((k for k in ['response', 'answer', 'text', 'output', 'result', 'data', 'reply'] 
                                             if k in data), None)
                         if response_field:
                             self.params['response_field'] = response_field
