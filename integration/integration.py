@@ -17,23 +17,22 @@ class IntegrationComponent:
             response = self.session.request(method, url, **kwargs)
             response.raise_for_status()
             
-            try:
-                data = response.json() if response.text else {}
-                if isinstance(data, dict) and not self.params.get('response_field'):
-                    response_field = next((k for k in ['response', 'answer', 'text', 'output', 'result', 'data'] 
-                                        if k in data), None)
-                    if response_field:
-                        self.params['response_field'] = response_field
-
-                return {
-                    "status": response.status_code,
-                    "data": data if isinstance(data, (dict, list)) else {"response": response.text}
-                }
-            except json.JSONDecodeError:
-                return {
-                    "status": response.status_code,
-                    "data": {"response": response.text}
-                }
+            if response.text:
+                try:
+                    data = response.json()
+                    if isinstance(data, dict) and not self.params.get('response_field'):
+                        response_field = next((k for k in ['response', 'answer', 'text', 'output', 'result', 'data'] 
+                                            if k in data), None)
+                        if response_field:
+                            self.params['response_field'] = response_field
+                except json.JSONDecodeError:
+                    self.params['response_field'] = "response"
+                    data = {"response": response.text}
+            return {
+                "status": response.status_code,
+                "data": data
+            }
+            
         except requests.RequestException:
             return None
 
@@ -56,7 +55,7 @@ class IntegrationComponent:
         param_names = ['message', 'text', 'query', 'q', 'prompt', 'input', 'msg']
         
         # List of endpoints to try (empty string first, then common endpoints)
-        endpoints = ['', '/llm4shell-lv1', '/api', '/chat', '/query', '/ask', '/get']
+        endpoints = ['/llm4shell-lv1', '/api', '/chat', '/query', '/ask', '/get']
         
         for endpoint in endpoints:
             full_url = f"{url.rstrip('/')}{endpoint}"
