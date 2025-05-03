@@ -59,7 +59,7 @@ Click enter to get started.
 
 def test_url(url):
     try:
-        requests.get(url, timeout=5)
+        #requests.get(url, timeout=5)
         return True
     except requests.RequestException as e:
         return False
@@ -68,7 +68,6 @@ def test_url(url):
 def get_args():
     parser = argparse.ArgumentParser(description=DESCRIPTION)
     parser.add_argument('--url', help='URL of the chatbot to test')
-    parser.add_argument('--type', help='Type of chatbot to test')
     parser.add_argument('--scenarios', nargs='+', help='List of scenarios to test')
     parser.add_argument('--filename', help='Output filename for the report', default=DEFAULT_FILENAME)
     parser.add_argument('--format', help='Format of the output report', default=DEFAULT_FORMAT, choices=AVAILABLE_FORMATS)
@@ -89,29 +88,10 @@ async def get_scenarios():
             return []
 
 
-async def get_chatbot_types():
-    headers = {"Authorization": API_KEY}
-    async with aiohttp.ClientSession() as session:
-        try:
-            async with session.get(f"{API_BASE_URL}/get-available-chatbots", headers=headers) as response:
-                if response.status == 200:
-                    chatbots = await response.json()
-                    return [chatbot.get("name") for chatbot in chatbots.get("available_chatbots", [])]
-                console.print(f"[red]Error getting chatbot types: {await response.text()}[/red]")
-                return []
-        except Exception as e:
-            console.print(f"[red]Error getting chatbot types: {str(e)}[/red]")
-            return []
-
-
-def interactive_input(scenarios, chatbot_types):
+def interactive_input(scenarios):
     console.print(f"[bold bright_green]{ASCII_ART}[/bold bright_green]")
     console.print("[bold bright_green][Enter Chatbot Details][/bold bright_green]")
 
-    type = Prompt.ask(
-        "[pale_green1]Enter chatbot type[/pale_green1]",
-        choices=chatbot_types
-    )
     url = Prompt.ask(
         "[pale_green1]Enter chatbot URL[/pale_green1]"
     )
@@ -151,16 +131,16 @@ def interactive_input(scenarios, chatbot_types):
                     break
                 if  1 <= int(i) <= len(scenarios):
                     selected_scenarios.append(scenarios[int(i) - 1])
-        return type, url, selected_scenarios, filename, format
+        return url, selected_scenarios, filename, format
   
 
-async def perform_attack(type, url, scenarios):
+async def perform_attack(url, scenarios):
     headers = {"Authorization": API_KEY}
     async with aiohttp.ClientSession() as session:
         try:
             async with session.post(
                     f"{API_BASE_URL}/perform-attack",
-                    json={"url": url, "name": type, "attack_types": scenarios},
+                    json={"url": url, "attack_types": scenarios},
                     headers=headers
             ) as response:
                 if response.status == 200:
@@ -342,20 +322,15 @@ async def get_report(attack_id, scenarios):
 async def main():
     args = get_args()
     available_scenarios = await get_scenarios()
-    available_chatbot_types = await get_chatbot_types()
 
-    if not available_scenarios or not available_chatbot_types:
+    if not available_scenarios:
         console.print("[red]Failed to get required data from API. Exiting...[/red]")
         return
 
-    if args.url and args.type:
-        url, type = args.url, args.type
+    if args.url:
+        url = args.url
         if not test_url(url):
             console.print("[red]Invalid URL. Please try again.[/red]")
-            return
-        if type not in available_chatbot_types:
-            console.print(
-                f"[red]Error: Invalid chatbot type. Please choose from: {', '.join(available_chatbot_types)}[/red]")
             return
         filename = args.filename if args.filename else DEFAULT_FILENAME
         format = args.format if args.format else DEFAULT_FORMAT
@@ -372,12 +347,12 @@ async def main():
         else:
             scenarios = available_scenarios
     else:
-        type, url, scenarios, filename, format = interactive_input(available_scenarios, available_chatbot_types)
+        url, scenarios, filename, format = interactive_input(available_scenarios)
 
     console.print(f"\n[bold bright_green]Testing your chatbot at {url}[/bold bright_green]")
 
     # Perform attack and get report
-    attack_id = await perform_attack(type, url, scenarios)
+    attack_id = await perform_attack(url, scenarios)
     if not attack_id:
         console.print("[red]Failed to start attack. Exiting...[/red]")
         return
