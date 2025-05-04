@@ -12,10 +12,9 @@ from .ai_client import AIClient
 
 
 class BrainComponent:
-    def __init__(self, chatbot_name: str, chatbot_url: str):
+    def __init__(self, chatbot_url: str):
         self.logger = logging.getLogger(__name__)
 
-        self.chatbot_name = chatbot_name
         self.chatbot_url = chatbot_url
 
         self.attack_categories: list[AttackCategory] = []
@@ -25,6 +24,7 @@ class BrainComponent:
         self.failed_attacks: List[Attack] = []
 
         self.ai_client = AIClient()
+        self.integration_instance = IntegrationComponent(url=chatbot_url)
 
         load_dotenv()
 
@@ -64,8 +64,8 @@ class BrainComponent:
         """
         self.logger.info(f"Executing attack: {attack.name}")
 
-        integration_instance = IntegrationComponent(name=self.chatbot_name, url=self.chatbot_url)
-        response = integration_instance.send_attack_command(attack.prompt)
+        
+        response = self.integration_instance.send_attack_command(attack.prompt)
         cleaned_response = str(response).encode('utf-8', errors='replace').decode('utf-8')
         self.logger.debug(f"Attack response: {cleaned_response}")
 

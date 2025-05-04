@@ -31,9 +31,9 @@ def get_chatbots():
         return chatbots_data.get("chatbots", [])
 
 
-def run_chatastrophe(chatbot_name, chatbot_url, attack_types, uuid):
+def run_chatastrophe(chatbot_url, attack_types, uuid):
     global active_jobs
-    chatastrophe = Chatastrophe(uuid=uuid, chatbot_name=chatbot_name, chatbot_url=chatbot_url,
+    chatastrophe = Chatastrophe(uuid=uuid, chatbot_url=chatbot_url,
                                 attack_types=attack_types)
     active_jobs[uuid] = chatastrophe
     
@@ -59,19 +59,14 @@ def perform_attack():
 
     data = request.json
     chatbot_url = data.get("url", "")
-    chatbot_name = data.get("name", "")
     attack_types = data.get("attack_types", [])
 
-    # Validate chatbot type
-    chatbots = get_chatbots()
-    if chatbot_name not in [chatbot.get("name") for chatbot in chatbots]:
-        return jsonify({"error": "Unsupported chatbot"}), 400
 
     # Generate a unique attack ID
     attack_id = str(uuid.uuid4())
 
     # Start the BrainComponent in a background thread
-    chatastrophe = Thread(target=run_chatastrophe, args=(chatbot_name, chatbot_url, attack_types, attack_id),
+    chatastrophe = Thread(target=run_chatastrophe, args=(chatbot_url, attack_types, attack_id),
                           name=f"{attack_id}")
     chatastrophe.start()
 

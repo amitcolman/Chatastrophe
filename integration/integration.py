@@ -1,69 +1,123 @@
-from typing import Dict, Any
+from typing import Dict, Any, List, Optional
 import requests
 import logging
-import yaml
-import os
+import json
 
 
 class IntegrationComponent:
-    def __init__(self, name: str, url: str):
+    def __init__(self, url: str):
         self.logger = logging.getLogger(__name__)
         self.session = requests.Session()
-        self.name = name
         self.url = url
-        self.headers = self.get_chatbot_fields(name, "headers")
-        self.endpoint = self.get_chatbot_fields(name, "endpoint")
-        self.method = self.get_chatbot_fields(name, "method")
-        self.param_name = self.get_chatbot_fields(name, "param_name")
-        self.body = self.get_chatbot_fields(name, "body")
-    
-    def get_chatbot_fields(self, name: str, field: str) -> str:
-        """
-        Get chatbot fields from config file
-        """
-        with open("./Chatbots/chatbots.yaml", "r") as f:
-            chatbots_yaml = yaml.safe_load(f)
-            for chatbot in chatbots_yaml['chatbots']:
-                if chatbot.get('name') == name:
-                    return chatbot.get(field)
+        self.params: Dict[str, Any] = {}
 
-    
-    def send_message_api(self, url: str, message: str, max_retries: int = 3) -> Dict[str, Any]:
-        """Send a message to chatbot using REST API with retries"""
-
-        for attempt in range(max_retries):
-            try:
-                url = f"{url}{self.endpoint}"
+    def _try_request(self, url: str, method: str, message: str, **kwargs) -> Dict[str, Any]:
+        """Attempt a request with given parameters"""
+        try:
+            response = self.session.request(method, url, **kwargs)
+            response.raise_for_status()
             
-                if self.method.upper() == 'GET':
-                    # Use param_name if specified, otherwise fall back to body.request
-                    param_key = self.param_name if self.param_name else self.body['request']
-                    request_params = {param_key: message}
-                    response = self.session.get(url, params=request_params, headers=self.headers)
-                else:  # Default to POST
-                    request_params = {self.body['request']: message}
-                    response = self.session.post(url, json=request_params, headers=self.headers)
-            
-                response.raise_for_status()
-            
-                # Handle string responses by converting them to JSON format
+            if response.text:
                 try:
-                    response_data = response.json()
-                except requests.exceptions.JSONDecodeError:
-                    # If the response is a string, wrap it in a JSON structure
-                    response_data = {"response": response.text}
-                
-                return {"status": 200, "data": response_data.get(self.body['response'])}
-            except Exception as e:
-                self.logger.warning(f"API connection failed (attempt {attempt + 1}/{max_retries}): {str(e)}")
-                if attempt == max_retries-1:
-                    return {"status": 503, "data": "Unable to connect to the chatbot after multiple attempts"}
+                    data = response.json()
+                    if isinstance(data, dict) and not self.params.get('response_field'):
+                        response_field = next((k for k in ['response', 'answer', 'text', 'output', 'result', 'data', 'reply'] 
+                                            if k in data), None)
+                        if response_field:
+                            self.params['response_field'] = response_field
+                except json.JSONDecodeError:
+                    self.params['response_field'] = "response"
+                    data = {"response": response.text}
+            return {
+                "status": response.status_code,
+                "data": data
+            }
+            
+        except requests.RequestException:
             return None
-        return None
+
+    def send_message_api(self, url: str, message: str) -> Dict[str, Any]:
+        """Smart message sender that tries different request methods and parameter structures"""
+        
+        if hasattr(self, 'params') and self.params:
+            response = self._try_request(
+                self.params['url'],
+                self.params['method'],
+                message,
+                params={self.params['param_name']: message} if self.params.get('method') == 'GET' else None,
+                json=self.params.get('body') if self.params.get('method') == 'POST' else None,
+                headers=self.params.get('headers', {})
+            )
+            if response and response["status"] in [200, 201]:
+                return response['data'].get(self.params.get('response_field'))
+
+        # Common parameter names used in APIs
+        param_names = ['message', 'text', 'query', 'q', 'prompt', 'input', 'msg']
+        
+        # List of endpoints to try (empty string first, then common endpoints)
+        endpoints = ['/chat', '/llm4shell-lv1', '/api', '/query', '/ask', '/get']
+        
+        for endpoint in endpoints:
+            full_url = f"{url.rstrip('/')}{endpoint}"
+            
+            # Try GET with different parameter names
+            for param in param_names:
+                response = self._try_request(
+                    full_url, 
+                    'GET',
+                    message,
+                    params={param: message}
+                )
+                if response and response["status"] in [200, 201]:
+                    headers = {'Content-Type': 'application/json'}
+                    self.params = {
+                        'method': 'GET',
+                        'url': full_url,
+                        'param_name': param,
+                        'headers': headers,
+                        **self.params
+                    }
+                    return response['data'].get(self.params.get('response_field'))
+
+            # Try POST with different body structures
+            common_body_structures = [
+                {param: message} for param in param_names
+            ] + [
+                {"request": message},
+                {"input": {"text": message}},
+                {"messages": [{"content": message}]},
+                message  # Try plain text body
+            ]
+
+            for body in common_body_structures:
+                headers = {'Content-Type': 'application/json'} if isinstance(body, dict) else {'Content-Type': 'text/plain'}
+                response = self._try_request(
+                    full_url,
+                    'POST',
+                    message,
+                    json=body if isinstance(body, dict) else None,
+                    data=body if isinstance(body, str) else None,
+                    headers=headers
+                )
+                if response and response["status"] in [200, 201]:
+                    self.params = {
+                        'method': 'POST',
+                        'url': full_url,
+                        'body': body,
+                        'headers': headers,
+                        **self.params
+                    }
+                    return response['data'].get(self.params.get('response_field'))
+
+        # If all attempts fail, return error
+        return {
+            "status": 400,
+            "data": "Failed to find a working request method and structure"
+        }
 
     def send_attack_command(self, prompt: str) -> Dict[str, Any]:
+        """Send an attack command using the smart message sender"""
         try:
-            response = self.send_message_api(url=self.url, message=prompt)
-            return {"status": response["status"], "data": response["data"]}
+            return {"status": 200, "data": self.send_message_api(url=self.url, message=prompt)}
         except Exception as e:
             return {"status": 400, "data": {"error": str(e)}}
