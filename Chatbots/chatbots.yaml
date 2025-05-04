@@ -47,4 +47,13 @@ chatbots:
     body:
       response: response
 
-
+  - name: Botpress Chatbot
+    type: api
+    endpoint: /chat
+    method: POST
+    fields:
+      url: string
+    headers:
+    body:
+      request: message
+      response: reply

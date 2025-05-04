@@ -5,7 +5,6 @@ import requests
 
 app = Flask(__name__)
 
-# W
 WEBHOOK_ID = os.getenv("BOTPRESS_WEBHOOK_ID")
 CHAT_API_BASE = f'https://chat.botpress.cloud/{WEBHOOK_ID}'
 
@@ -20,7 +19,7 @@ def send_message():
     if not user_message:
         return jsonify({'error': 'No message provided'}), 400
 
-    # Step 1: Create a new user
+    # Create a new user
     user_payload = {
         "name": "Anonymous",
         "profile": "",
@@ -34,14 +33,14 @@ def send_message():
 
     headers = {'x-user-key': user_key}
 
-    # Step 2: Create a new conversation
+    # Create a new conversation
     conv_response = requests.post(f'{CHAT_API_BASE}/conversations', headers=headers, json={})
     if conv_response.status_code not in (200, 201):
         print(f"Error code {conv_response.status_code}: {conv_response.content}")
         return jsonify({'error': 'Failed to create conversation'}), 500
     conversation_id = conv_response.json().get('conversation', {}).get('id')
 
-    # Step 3: Send the user's message
+    # Send the user's message
     message_payload = {
         "conversationId": conversation_id,
         "payload": {
@@ -55,18 +54,19 @@ def send_message():
         headers=headers,
         json=message_payload
     )
-    print(headers)
     if message_send.status_code not in (200,201):
         print(f"Error code {message_send.status_code}: {message_send.content}")
         return jsonify({'error': 'Failed to send message'}), 500
-    # Step 4: Retrieve the bot's response
+    
+    # Retrieve the bot's response
     msg_id = message_send.json().get('message', {}).get('id')
     if not msg_id:
         return jsonify({'error': 'Failed to identify message'}), 500
 
     retry_counter = 0
     msg_counter = 0
-    while retry_counter < 10 and msg_counter < 2:
+    while retry_counter < 3 and msg_counter < 2:
+        sleep(3)
         messages_response = requests.get(
             f'{CHAT_API_BASE}/conversations/{conversation_id}/messages/{msg_id}',
             headers=headers
@@ -77,6 +77,7 @@ def send_message():
             f'{CHAT_API_BASE}/conversations/{conversation_id}/messages',
             headers=headers
         )
+        print(f"Messages: {messages_response.headers}, {messages_response.content}")
         if messages_response.status_code != 200:
             print(f"Error code {messages_response.status_code}: {messages_response.content}")
             return jsonify({'error': 'Failed to retrieve messages'}), 500
@@ -90,13 +91,15 @@ def send_message():
         if msg_counter < 2:
             retry_counter += 1
             print(f"Retrying... {retry_counter}")
-            sleep(1)
         else:
             break
 
     # Return message from the bot
-    bot_reply = messages[0].get('payload', {}).get('text', 'No response')
-
+    bot_reply = '\n'.join(
+        message.get('payload', {}).get('text', 'No response') 
+        for message in reversed(messages[:-1])
+    )
+    print(f"Bot reply: {bot_reply}")
     return jsonify({'reply': bot_reply})
 
 
