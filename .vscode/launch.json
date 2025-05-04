@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Chatastrophe API",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/chatastrophe_api.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "LOG_LEVEL": "DEBUG"
+            },
+            "args": []
+        }
+    ]
+} 

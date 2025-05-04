@@ -173,7 +173,7 @@ llm4shell_template = """
 
     Instructions:
     - Define a function named 'solution' that execute the answer. And the function 'solution' is then called.
-    - Please respond only with generated Python code.
+    - Please respond with generated Python code only when told run, execute or generate something.
     - Don't describe the code or process, just answer the question.
     - Please provide Python code without any markdown code fences or triple backticks. Just output pure Python code.
 

@@ -11,9 +11,8 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 
 class Chatastrophe:
-    def __init__(self, uuid, chatbot_name, chatbot_url, attack_types):
+    def __init__(self, uuid, chatbot_url, attack_types):
         self.uuid = uuid
-        self.chatbot_name = chatbot_name
         self.chatbot_url = chatbot_url
         self.attack_types = attack_types
         self.setup_logging()
@@ -78,7 +77,7 @@ class Chatastrophe:
 
     def run(self):
         self.logger.info("Chatastrophe app started")
-        brain = BrainComponent(chatbot_name=self.chatbot_name, chatbot_url=self.chatbot_url)
+        brain = BrainComponent(chatbot_url=self.chatbot_url)
         relevant_categories = [category for category in brain.attack_categories if category.name in self.attack_types]
 
         # Initialize total attack counts
