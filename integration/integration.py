@@ -55,7 +55,7 @@ class IntegrationComponent:
         param_names = ['message', 'text', 'query', 'q', 'prompt', 'input', 'msg']
         
         # List of endpoints to try (empty string first, then common endpoints)
-        endpoints = ['/llm4shell-lv1', '/api', '/chat', '/query', '/ask', '/get']
+        endpoints = ['/chat', '/llm4shell-lv1', '/api', '/query', '/ask', '/get']
         
         for endpoint in endpoints:
             full_url = f"{url.rstrip('/')}{endpoint}"
