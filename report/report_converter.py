@@ -43,7 +43,8 @@ class HTMLTemplates:
 
     MITIGATION = r"""<li>{mitigation}</li>"""
 
-    ATTACK_ANALYSIS = r"""<h3 class="text-left my-4">2.{attack_num}. {attack_category} - {block_percentage}% Block Rate</h3>
+    ATTACK_ANALYSIS = r"""<div class="section-container">
+            <h3 class="text-left my-4">2.{attack_num}. {attack_category} - {block_percentage}% Block Rate</h3>
             <p><strong>Description:</strong> 
             <p>{attack_description}</p>
             <table class="table table-bordered">
@@ -64,6 +65,7 @@ class HTMLTemplates:
                     {mitigations}
                 </ul>
             </p>
+            </div>
 
             <div class="page-break"></div>"""
 

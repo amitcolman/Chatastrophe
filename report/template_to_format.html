@@ -75,60 +75,112 @@
                         }
                     });
                 });
-            });
-            
-            // Chart Data (Modify manually to match chosen attacks)
-            const attackLabels = {chatastrophe_attack_labels};
-            const blockedData = {chatastrophe_blocked_data};
-            const succeededData = {chatastrophe_succeeded_data};
-            
-            const ctxBar = document.getElementById('blockRateChart').getContext('2d');
-            new Chart(ctxBar, {
-                type: 'bar',
-                data: {
-                    labels: attackLabels,
-                    datasets: [
-                        {
-                            label: 'Protected',
-                            data: blockedData,
-                            backgroundColor: '#2e7d32'
-                        },
-                        {
-                            label: 'Compromised',
-                            data: succeededData,
-                            backgroundColor: '#dc2626'
-                        }
-                    ]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    responsive: true
+                
+                // Add score-based background
+                const scoreCard = document.querySelector('.score-card');
+                const scoreValue = parseInt(document.querySelector('.score-value').textContent);
+                
+                // Set the score category based on the value
+                if (scoreValue >= 81) {
+                    scoreCard.setAttribute('data-score', 'very-high');
+                } else if (scoreValue >= 61) {
+                    scoreCard.setAttribute('data-score', 'high');
+                } else if (scoreValue >= 41) {
+                    scoreCard.setAttribute('data-score', 'medium');
+                } else if (scoreValue >= 21) {
+                    scoreCard.setAttribute('data-score', 'very-low');
+                } else {
+                    scoreCard.setAttribute('data-score', 'low');
                 }
-            });
-            
-            const ctxPie = document.getElementById('blockRatePie').getContext('2d');
-            new Chart(ctxPie, {
-                type: 'pie',
-                data: {
-                    labels: ['Protected', 'Compromised'],
-                    datasets: [{
-                        data: [{chatastrophe_blocked_attacks_number}, {chatastrophe_succeeded_attacks_number}],
-                        backgroundColor: ['#2e7d32', '#dc2626']
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: true,
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                font: {
-                                    size: 14
+                
+                // Chart Data (Modify manually to match chosen attacks)
+                const attackLabels = {chatastrophe_attack_labels};
+                const blockedData = {chatastrophe_blocked_data};
+                const succeededData = {chatastrophe_succeeded_data};
+                
+                const ctxBar = document.getElementById('blockRateChart').getContext('2d');
+                new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: attackLabels,
+                        datasets: [
+                            {
+                                label: 'Protected',
+                                data: blockedData,
+                                backgroundColor: '#2e7d32'
+                            },
+                            {
+                                label: 'Compromised',
+                                data: succeededData,
+                                backgroundColor: '#dc2626'
+                            }
+                        ]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        onClick: (event, elements) => {
+                            if (elements && elements.length > 0) {
+                                const index = elements[0].index;
+                                const label = attackLabels[index];
+                                // Find the section by looking for the h3 that contains the category name
+                                const sections = document.querySelectorAll('.section-container h3');
+                                for (const section of sections) {
+                                    if (section.textContent.includes(label)) {
+                                        section.scrollIntoView({ behavior: 'smooth' });
+                                        // Add a temporary highlight effect
+                                        section.closest('.section-container').classList.add('highlight-section');
+                                        setTimeout(() => {
+                                            section.closest('.section-container').classList.remove('highlight-section');
+                                        }, 2000);
+                                        break;
+                                    }
+                                }
+                            }
+                        },
+                        onHover: (event, elements) => {
+                            event.native.target.style.cursor = elements.length ? 'pointer' : 'default';
+                        }
+                    }
+                });
+                
+                const ctxPie = document.getElementById('blockRatePie').getContext('2d');
+                new Chart(ctxPie, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Protected', 'Compromised'],
+                        datasets: [{
+                            data: [{chatastrophe_blocked_attacks_number}, {chatastrophe_succeeded_attacks_number}],
+                            backgroundColor: ['#2e7d32', '#dc2626']
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: true,
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: {
+                                        size: 14
+                                    }
                                 }
                             }
                         }
                     }
+                });
+
+                // Add IDs to detailed analysis sections
+                const detailedAnalysis = document.querySelector('.detailed-analysis');
+                if (detailedAnalysis) {
+                    const sections = detailedAnalysis.querySelectorAll('.attack-section');
+                    sections.forEach(section => {
+                        const title = section.querySelector('h3');
+                        if (title) {
+                            const sectionId = 'attack-' + title.textContent.toLowerCase().replace(/\s+/g, '-');
+                            section.id = sectionId;
+                        }
+                    });
                 }
             });
         </script>
@@ -196,11 +248,33 @@
         }
 
         .score-card {
-            background: linear-gradient(135deg, #2c5282, #1a2634);
+            background: #2c5282;
             color: white;
             padding: 2rem;
             border-radius: 8px;
             text-align: center;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .score-card[data-score] {
+            background: linear-gradient(135deg, #dc2626, #b91c1c); /* Red gradient for 0-20 */
+        }
+
+        .score-card[data-score="very-low"] {
+            background: linear-gradient(135deg, #e95313, #dc2626); /* Red gradient for 21-40 */
+        }
+
+        .score-card[data-score="medium"] {
+            background: linear-gradient(135deg, #ffb81e, #eab308); /* Yellow gradient for 41-60 */
+        }
+
+        .score-card[data-score="high"] {
+            background: linear-gradient(135deg, #f7ff14, #84cc16); /* Yellowish green gradient for 61-80 */
+        }
+
+        .score-card[data-score="very-high"] {
+            background: linear-gradient(135deg, #2e7d32, #166534); /* Green gradient for 81-100 */
         }
 
         .score-value {
@@ -208,6 +282,7 @@
             font-weight: 700;
             line-height: 1;
             margin: 1rem 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .score-max {
@@ -317,6 +392,24 @@
         .severity-INFORMATIONAL {
             background-color: #3b82f6;
             color: white;
+        }
+
+        .highlight-section {
+            animation: highlight 2s ease-out;
+        }
+
+        @keyframes highlight {
+            0% {
+                background-color: rgba(120, 111, 84, 0.2);
+            }
+            100% {
+                background-color: transparent;
+            }
+        }
+
+        /* Add smooth scrolling to the whole page */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </body>
