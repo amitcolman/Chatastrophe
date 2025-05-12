@@ -22,6 +22,9 @@ class BrainComponent:
 
         self.successful_attacks: List[Attack] = []
         self.failed_attacks: List[Attack] = []
+        self.successful_attack_categories: List[str] = []
+        self.failed_attack_categories: List[str] = []
+
 
         self.ai_client = AIClient()
         self.integration_instance = IntegrationComponent(url=chatbot_url)

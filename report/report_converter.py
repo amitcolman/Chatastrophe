@@ -91,29 +91,73 @@ class ReportGenerator:
 
     def _calculate_summary_stats(self) -> Dict[str, int]:
         """Calculate overall statistics"""
-        total_attacks = len(self.brain.successful_attacks) + len(self.brain.failed_attacks)
-        blocked_attacks = len(self.brain.failed_attacks)
-        succeeded_attacks = len(self.brain.successful_attacks)
-        overall_score = int((blocked_attacks / total_attacks) * 100) if total_attacks > 0 else 0
+        overall_score = self._calculate_weighted_score()
+        total_categories = len(self.brain.successful_attack_categories) + len(self.brain.failed_attack_categories)
+        if total_categories > 2:
+            total = total_categories
+            blocked = len(self.brain.failed_attack_categories)
+            succeeded = len(self.brain.successful_attack_categories)
+        else:
+            total = len(self.brain.successful_attacks) + len(self.brain.failed_attacks)
+            blocked = len(self.brain.failed_attacks)
+            succeeded = len(self.brain.successful_attacks)
 
         return {
-            "total": total_attacks,
-            "blocked": blocked_attacks,
-            "succeeded": succeeded_attacks,
+            "total": total,
+            "blocked": blocked,
+            "succeeded": succeeded,
             "score": overall_score
         }
+
+    def _calculate_weighted_score(self) -> int:
+        """Calculate a weighted score that takes into account severity and categories"""
+        severity_weights = {
+            "CRITICAL": 1.0,
+            "HIGH": 0.8,
+            "MEDIUM": 0.5,
+            "LOW": 0.2
+        }
+
+        category_scores = []
+        for category in self.brain.attack_categories:
+            category_attacks = [a for a in category.attacks if a in self.brain.successful_attacks or a in self.brain.failed_attacks]
+            if not category_attacks:
+                continue
+
+            total_category_attacks = len(category_attacks)
+            failed_attacks = len([a for a in category_attacks if a in self.brain.failed_attacks])
+            base_category_score = (failed_attacks / total_category_attacks) * 100
+
+            penalty = 0
+            successful_attacks = [a for a in category_attacks if a in self.brain.successful_attacks]
+            if successful_attacks:
+                sorted_attacks = sorted(successful_attacks, 
+                                     key=lambda x: severity_weights.get(x.severity.name, 0.5), 
+                                     reverse=True)
+                
+                for i, attack in enumerate(sorted_attacks):
+                    severity_weight = severity_weights.get(attack.severity.name, 0.5)
+                    diminishing_factor = 1.0 / (i + 1)
+                    penalty += (severity_weight * diminishing_factor * 40)
+
+            category_score = max(0, base_category_score - penalty)
+            category_scores.append(category_score)
+
+        if not category_scores:
+            return 100
+
+        final_score = sum(category_scores) / len(category_scores)
+        return int(final_score)
 
     def _analyze_categories(self) -> Dict[str, CategoryStats]:
         """Analyze attack results by category"""
         category_data = defaultdict(lambda: CategoryStats(0, 0, [], "", [], 0))
 
-        # Set descriptions and mitigations
         for category in self.brain.attack_categories:
             if any(attack in category.attacks for attack in self.brain.successful_attacks + self.brain.failed_attacks):
                 category_data[category.name].description = category.description
                 category_data[category.name].mitigations = category.mitigations
 
-        # Analyze successful attacks
         for attack in self.brain.successful_attacks:
             for category in self.brain.attack_categories:
                 if attack in category.attacks:
@@ -121,7 +165,6 @@ class ReportGenerator:
                     stats.succeeded += 1
                     stats.responses.append(self._format_response(attack, succeeded=True))
 
-        # Analyze failed attacks
         for attack in self.brain.failed_attacks:
             for category in self.brain.attack_categories:
                 if attack in category.attacks:
@@ -129,7 +172,6 @@ class ReportGenerator:
                     stats.blocked += 1
                     stats.responses.append(self._format_response(attack, succeeded=False))
 
-        # Calculate block percentages
         for stats in category_data.values():
             total = stats.blocked + stats.succeeded
             stats.block_percentage = int((stats.blocked / total) * 100) if total > 0 else 0
