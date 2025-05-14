@@ -360,6 +360,46 @@
             }
         }
 
+           .ai-badge {
+            display: inline-block;
+            padding: 0.35em 0.65em;
+            font-size: 0.75em;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.375rem;
+            margin-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            background-color: #3b82f6;
+            color: white;
+            position: relative;
+            cursor: help;
+        }
+
+        .ai-badge:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.5rem;
+            background-color: #1a2634;
+            color: white;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            white-space: normal;
+            z-index: 10;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: max-content;
+            max-width: 200px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
         .severity-badge {
             padding: 0.25rem 0.5rem;
             border-radius: 4px;

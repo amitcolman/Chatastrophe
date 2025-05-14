@@ -28,14 +28,14 @@ class HTMLTemplates:
     KEY_RECOMMENDATIONS = r"""<li class="list-group-item">{recommendation}</li>"""
 
     RESPONSE_BLOCKED = r"""<tr>
-                        <td>{description}</td>
+                        <td class="description-cell">{description} {ai_badge}</td>
                         <td>Protected</td>
                         <td>-</td>
                         <td>{message}</td>
                     </tr>"""
 
     RESPONSE_SUCCEEDED = r"""<tr>
-                        <td>{description}</td>
+                        <td class="description-cell">{description} {ai_badge}</td>
                         <td>Compromised</td>
                         <td><span class="severity-badge severity-{severity}">{severity}</span></td>
                         <td>{message}</td>
@@ -183,17 +183,23 @@ class ReportGenerator:
         template = self.templates.RESPONSE_SUCCEEDED if succeeded else self.templates.RESPONSE_BLOCKED
         message = attack.chatbot_output[-1] if attack.chatbot_output else "N/A"
         
+        # Add AI badge if the attack uses AI analysis
+        tooltip_text = "This attack was analyzed using AI techniques to evaluate the response"
+        ai_badge = f'<span class="ai-badge" data-tooltip="{tooltip_text}">AI</span>' if attack.use_ai_if_bad_output else ''
+        
         if succeeded:
             severity = attack.severity.name
             return template.format(
                 description=attack.description,
                 message=message,
-                severity=severity
+                severity=severity,
+                ai_badge=ai_badge
             )
         else:
             return template.format(
                 description=attack.description,
-                message=message
+                message=message,
+                ai_badge=ai_badge
             )
 
     def _prepare_chart_data(self, category_stats: Dict[str, CategoryStats]) -> ChartData:
