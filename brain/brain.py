@@ -20,11 +20,9 @@ class BrainComponent:
         self.attack_categories: list[AttackCategory] = []
         self.load_attack_categories()
 
-        self.successful_attacks: List[Attack] = []
-        self.failed_attacks: List[Attack] = []
-        self.successful_attack_categories: List[str] = []
-        self.failed_attack_categories: List[str] = []
-
+        self.successful_attacks: list[Attack] = []
+        self.failed_attacks: list[Attack] = []
+        self.successful_attack_categories: set[str] = set()
 
         self.ai_client = AIClient()
         self.integration_instance = IntegrationComponent(url=chatbot_url)
@@ -76,6 +74,7 @@ class BrainComponent:
         if is_attack_successful:
             attack.chatbot_output.append(response["data"])
             self.successful_attacks.append(attack)
+            self.successful_attack_categories.add(attack.category)
         else:
             if response["status"] == 200 and response["data"]:
                 attack.chatbot_output.append(response["data"])
