@@ -69,6 +69,7 @@ class BrainComponent:
 
         response = self.integration_instance.send_attack_command(attack.alternative_prompt if attack.alternative_prompt
                                                                  else attack.prompt)
+
         cleaned_response = str(response).encode('utf-8', errors='replace').decode('utf-8')
         self.logger.debug(f"Attack response: {cleaned_response}")
 
