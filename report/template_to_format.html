@@ -322,7 +322,8 @@
         .table {
             background: white;
             border-radius: 8px;
-            overflow: hidden;
+            overflow: visible;
+
         }
 
         .table th {
@@ -468,6 +469,16 @@
             border-radius: 4px;
             font-weight: 500;
         }
+
+        .table, td, th {
+        overflow: visible;
+        position: relative;
+        }
+
+        .ai-badge:hover::after {
+            z-index: 9999;
+        }
+
     </style>
 </body>
 </html>
