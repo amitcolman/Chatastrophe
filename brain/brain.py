@@ -25,7 +25,6 @@ class BrainComponent:
         self.successful_attack_categories: List[str] = []
         self.failed_attack_categories: List[str] = []
 
-
         self.ai_client = AIClient()
         self.integration_instance = IntegrationComponent(url=chatbot_url)
 
@@ -59,24 +58,35 @@ class BrainComponent:
                 return attack_category.attacks
         return []
 
-    def execute_attack(self, attack: Attack):
+    def execute_attack(self, attack: Attack, general_retry_count: int = 0):
         """
         Execute an attack
 
         @param attack: The attack to execute
+        @param general_retry_count: The number of retries to attempt if the attack fails
         """
         self.logger.info(f"Executing attack: {attack.name}")
 
-        
-        response = self.integration_instance.send_attack_command(attack.prompt)
+        response = self.integration_instance.send_attack_command(attack.alternative_prompt if attack.alternative_prompt
+                                                                 else attack.prompt)
         cleaned_response = str(response).encode('utf-8', errors='replace').decode('utf-8')
         self.logger.debug(f"Attack response: {cleaned_response}")
+
+        if "EOFError" in cleaned_response and general_retry_count < 1:
+            general_retry_count += 1
+            self.logger.error("EOFError detected in response. Retrying attack...")
+            return self.execute_attack(attack, general_retry_count)
 
         is_attack_successful = self.validate_attack_response(attack, response)
         if is_attack_successful:
             attack.chatbot_output.append(response["data"])
             self.successful_attacks.append(attack)
         else:
+            if attack.alternative_prompt and attack.retry_count < attack.max_retries:
+                attack.retry_count += 1
+                self.logger.info(f"Retrying attack with alternative prompt. Retry count: {attack.retry_count}/{attack.max_retries}")
+                return self.execute_attack(attack)
+
             if response["status"] == 200 and response["data"]:
                 attack.chatbot_output.append(response["data"])
             self.failed_attacks.append(attack)
@@ -129,13 +139,12 @@ class BrainComponent:
             if analysis["success"]:
                 self.logger.info(f"AI analysis determined attack succeeded: {analysis['reason']}")
                 return True
+            elif analysis["alternative_prompt"] and analysis["alternative_prompt"] != "null":
+                self.logger.info(f"AI suggested alternative prompt: {analysis['alternative_prompt']}")
+                attack.alternative_prompt = analysis["alternative_prompt"]
             elif analysis["blocked"]:
                 self.logger.info(f"AI analysis determined attack was blocked: {analysis['reason']}")
                 return False
-            # elif analysis["follow_up_prompt"]:
-            #     self.logger.info(f"AI suggested follow-up prompt: {analysis['follow_up_prompt']}")
-            #     # Store the follow-up prompt for potential future use
-            #     attack.follow_up_prompt = analysis["follow_up_prompt"]
 
         return False
 

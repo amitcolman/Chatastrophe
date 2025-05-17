@@ -36,16 +36,45 @@ class IntegrationComponent:
         except requests.RequestException:
             return None
 
+    def replace_strings(self, obj, message):
+        if isinstance(obj, dict):
+            return {k: self.replace_strings(v, message) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [self.replace_strings(item, message) for item in obj]
+        elif isinstance(obj, str):
+            return message
+        else:
+            return obj
+
     def send_message_api(self, url: str, message: str) -> Dict[str, Any]:
         """Smart message sender that tries different request methods and parameter structures"""
         
         if hasattr(self, 'params') and self.params:
+            # Build the body fresh for each request
+            if self.params.get('method') == 'GET':
+                params = {self.params['param_name']: message}
+                json_data = None
+                data_data = None
+            elif self.params.get('method') == 'POST':
+                body_template = self.params.get('body_template')
+                if isinstance(body_template, dict) or isinstance(body_template, list):
+                    body = self.replace_strings(body_template, message)
+                else:
+                    body = message
+                params = None
+                json_data = body if isinstance(body, (dict, list)) else None
+                data_data = body if isinstance(body, str) else None
+            else:
+                params = None
+                json_data = None
+                data_data = None
             response = self._try_request(
                 self.params['url'],
                 self.params['method'],
                 message,
-                params={self.params['param_name']: message} if self.params.get('method') == 'GET' else None,
-                json=self.params.get('body') if self.params.get('method') == 'POST' else None,
+                params=params,
+                json=json_data,
+                data=data_data,
                 headers=self.params.get('headers', {})
             )
             if response and response["status"] in [200, 201]:
@@ -90,20 +119,22 @@ class IntegrationComponent:
             ]
 
             for body in common_body_structures:
-                headers = {'Content-Type': 'application/json'} if isinstance(body, dict) else {'Content-Type': 'text/plain'}
+                headers = {'Content-Type': 'application/json'} if isinstance(body, (dict, list)) else {'Content-Type': 'text/plain'}
                 response = self._try_request(
                     full_url,
                     'POST',
                     message,
-                    json=body if isinstance(body, dict) else None,
+                    json=body if isinstance(body, (dict, list)) else None,
                     data=body if isinstance(body, str) else None,
                     headers=headers
                 )
                 if response and response["status"] in [200, 201]:
+                    # Store only the structure, not the actual message
+                    body_template = body if isinstance(body, (dict, list)) else None
                     self.params = {
                         'method': 'POST',
                         'url': full_url,
-                        'body': body,
+                        'body_template': body_template,
                         'headers': headers,
                         **self.params
                     }

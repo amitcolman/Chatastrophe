@@ -16,13 +16,15 @@ class Attack:
         self.expected_outputs: list[str] = expected_outputs
         self.severity: Severity = severity
         self.category: str = category
-        # If the output contains known strings indicating the chatbot actively refused to answer, use AI to generate
-        # a follow-up prompt
+
         self.ai_analysis_prompt: Optional[str] = ai_analysis_prompt
         self.use_ai_if_bad_output: bool = use_ai_if_bad_output
+        self.max_retries: int = 1
 
         # Run-time variables
         self.chatbot_output: List[str] = []
+        self.alternative_prompt: Optional[str] = None
+        self.retry_count: int = 0
 
     @staticmethod
     def from_yaml(yaml_data: dict, category: str) -> 'Attack':
