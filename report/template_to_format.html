@@ -15,6 +15,7 @@
                 <h1 class="report-title">Security Assessment Report</h1>
                 <h2 class="report-subtitle">AI System Security Evaluation</h2>
                 <p class="report-date">Generated on {current_date}</p>
+                <p class="target-url">Targeted chatbot: <span class="url-text">{chatbot_url}</span></p>
             </div>
         </div>
 
@@ -30,10 +31,11 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="chart-container">
-                            <canvas id="blockRatePie"></canvas>
-                        </div>
-                    </div>
+    <div class="chart-container" style="position: relative; display: flex; justify-content: center; align-items: center; height: 300px;">
+        <canvas id="blockRatePie"></canvas>
+    </div>
+</div>
+
                 </div>
 
                 <div class="mb-5">
@@ -155,7 +157,7 @@
                         }]
                     },
                     options: {
-                        maintainAspectRatio: true,
+                        maintainAspectRatio: false,
                         responsive: true,
                         plugins: {
                             legend: {
@@ -258,23 +260,23 @@
         }
 
         .score-card[data-score] {
-            background: linear-gradient(135deg, #dc2626, #b91c1c); /* Red gradient for 0-20 */
+            background: linear-gradient(135deg, #cc3030, #af0b0b); /* Red gradient for 0-20 */
         }
 
         .score-card[data-score="very-low"] {
-            background: linear-gradient(135deg, #e95313, #dc2626); /* Red gradient for 21-40 */
+            background: linear-gradient(135deg, #e45c43, #c1270b); /* Red gradient for 21-40 */
         }
 
         .score-card[data-score="medium"] {
-            background: linear-gradient(135deg, #ffb81e, #eab308); /* Yellow gradient for 41-60 */
+            background: linear-gradient(135deg, #e4a341, #ea9008); /* Yellow gradient for 41-60 */
         }
 
         .score-card[data-score="high"] {
-            background: linear-gradient(135deg, #f7ff14, #84cc16); /* Yellowish green gradient for 61-80 */
+            background: linear-gradient(135deg, #b3d558, #83aa1a); /* Yellowish green gradient for 61-80 */
         }
 
         .score-card[data-score="very-high"] {
-            background: linear-gradient(135deg, #2e7d32, #166534); /* Green gradient for 81-100 */
+            background: linear-gradient(135deg, #2bc665, #0d612d); /* Green gradient for 81-100 */
         }
 
         .score-value {
@@ -450,6 +452,21 @@
         /* Add smooth scrolling to the whole page */
         html {
             scroll-behavior: smooth;
+        }
+        
+        .target-url {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 1rem;
+            color: #ffffff;
+        }
+        
+        .url-text {
+            font-family: monospace;
+            font-size: 1rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
         }
     </style>
 </body>

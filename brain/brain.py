@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import List, Optional
+from typing import List, Optional, Set
 
 import yaml
 
@@ -22,8 +22,8 @@ class BrainComponent:
 
         self.successful_attacks: List[Attack] = []
         self.failed_attacks: List[Attack] = []
-        self.successful_attack_categories: List[str] = []
-        self.failed_attack_categories: List[str] = []
+        self.successful_attack_categories: Set[str] = set()
+        self.failed_attack_categories: Set[str] = set()
 
         self.ai_client = AIClient()
         self.integration_instance = IntegrationComponent(url=chatbot_url)
@@ -81,6 +81,7 @@ class BrainComponent:
         if is_attack_successful:
             attack.chatbot_output.append(response["data"])
             self.successful_attacks.append(attack)
+            self.successful_attack_categories.add(attack.category)
         else:
             if attack.alternative_prompt and attack.retry_count < attack.max_retries:
                 attack.retry_count += 1
