@@ -72,14 +72,12 @@ def test_url(url):
     try:
         with console.status("Connecting to chatbot URL...", spinner="dots") as status:
             sleep(1)
-            #requests.get(url, timeout=5)
+            requests.get(url, timeout=5)
             status.update("")  
         return True
     except requests.Timeout:
-        console.print("[red]Connection timed out.[/red]")
+        console.print("[red]Connection to chatbot timed out. Please check if the chatbot is running and accessible.[/red]")
         return False
-    
-    
 
 def get_args():
     parser = argparse.ArgumentParser(description=DESCRIPTION)
