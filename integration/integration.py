@@ -92,13 +92,16 @@ class IntegrationComponent:
                 headers=self.params.get('headers', {})
             )
             if response and response["status"] in [200, 201]:
-                return response['data'].get(self.params.get('response_field'))
+                return {
+                    "status": 200,
+                    "data": response['data'].get(self.params.get('response_field'))
+                }
 
         # Common parameter names used in APIs
         param_names = ['message', 'text', 'query', 'q', 'prompt', 'input', 'msg']
         
         # List of endpoints to try (empty string first, then common endpoints)
-        endpoints = ['/llm4shell-lv1', '/chat', '/get', '/api', '/query', '/ask', '']
+        endpoints = ['/chat', '/llm4shell-lv1', '/get', '/api', '/query', '/ask', '']
         for endpoint in endpoints:
             full_url = f"{url.rstrip('/')}{endpoint}"
             error404 = False
@@ -123,7 +126,10 @@ class IntegrationComponent:
                         **self.params
                     }
                     self.full_url = full_url
-                    return response['data'].get(self.params.get('response_field'))
+                    return {
+                        "status": 200,
+                        "data": response['data'].get(self.params.get('response_field'))
+                    }
 
                 elif response and response["status"] == 404: # Not Found
                     error404 = True
@@ -166,7 +172,10 @@ class IntegrationComponent:
                         **self.params
                     }
                     self.full_url = full_url
-                    return response['data'].get(self.params.get('response_field'))
+                    return {
+                        "status": 200,
+                        "data": response['data'].get(self.params.get('response_field'))
+                    }
 
         # If all attempts fail, return error
         return {
@@ -177,6 +186,10 @@ class IntegrationComponent:
     def send_attack_command(self, prompt: str) -> Dict[str, Any]:
         """Send an attack command using the smart message sender"""
         try:
-            return {"status": 200, "data": self.send_message_api(url=self.url, message=prompt), "endpoint": self.full_url}
+            response = self.send_message_api(url=self.url, message=prompt)
+            if response["status"] == 200:
+                return {"status": 200, "data": response["data"], "endpoint": self.full_url}
+            else:
+                return {"status": 404, "data": response["data"], "endpoint": self.full_url}
         except Exception as e:
             return {"status": 400, "data": {"error": str(e)}, "endpoint": self.full_url}
