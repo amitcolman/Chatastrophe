@@ -136,15 +136,10 @@ class ReportGenerator:
     def _calculate_summary_stats(self) -> Dict[str, int]:
         """Calculate overall statistics"""
         overall_score = self._calculate_weighted_score()
-        total_categories = len(self.brain.attack_categories)
-        if total_categories > 2:
-            total = total_categories
-            succeeded = len(self.brain.successful_attack_categories)
-            blocked = total_categories - succeeded
-        else:
-            total = len(self.brain.successful_attacks) + len(self.brain.failed_attacks)
-            blocked = len(self.brain.failed_attacks)
-            succeeded = len(self.brain.successful_attacks)
+        # Always use individual attack counts for stats
+        total = len(self.brain.successful_attacks) + len(self.brain.failed_attacks)
+        blocked = len(self.brain.failed_attacks)
+        succeeded = len(self.brain.successful_attacks)
 
         return {
             "total": total,

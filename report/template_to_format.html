@@ -150,7 +150,7 @@
                 new Chart(ctxPie, {
                     type: 'pie',
                     data: {
-                        labels: ['Protected', 'Compromised'],
+                        labels: ['Protected Attacks', 'Compromised Attacks'],
                         datasets: [{
                             data: [{chatastrophe_blocked_attacks_number}, {chatastrophe_succeeded_attacks_number}],
                             backgroundColor: ['#2e7d32', '#dc2626']
@@ -166,6 +166,13 @@
                                     font: {
                                         size: 14
                                     }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Attack Results',
+                                font: {
+                                    size: 16
                                 }
                             }
                         }
