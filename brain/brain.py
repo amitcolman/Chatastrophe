@@ -16,6 +16,7 @@ class BrainComponent:
         self.logger = logging.getLogger(__name__)
 
         self.chatbot_url = chatbot_url
+        self.chatbot_endpoint = chatbot_url
 
         self.attack_categories: list[AttackCategory] = []
         self.load_attack_categories()
@@ -69,6 +70,12 @@ class BrainComponent:
 
         response = self.integration_instance.send_attack_command(attack.alternative_prompt if attack.alternative_prompt
                                                                  else attack.prompt)
+        if response["status"] == 404:
+            self.logger.error(f"Error Sending attack: {response['data']}")
+
+        self.chatbot_endpoint = response["endpoint"]
+
+
         cleaned_response = str(response).encode('utf-8', errors='replace').decode('utf-8')
         self.logger.debug(f"Attack response: {cleaned_response}")
 

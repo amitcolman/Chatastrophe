@@ -160,6 +160,7 @@ class ReportGenerator:
 
         if len(self.brain.failed_attacks) == 0:
             return 100
+
         if len(self.brain.successful_attacks) == 0:
             return 0
 
@@ -267,7 +268,7 @@ class ReportGenerator:
                        .replace("{chatastrophe_blocked_attacks_number}", str(summary_stats["blocked"]))
                        .replace("{chatastrophe_succeeded_attacks_number}", str(summary_stats["succeeded"]))
                        .replace("{current_date}", current_date)
-                       .replace("{chatbot_url}", (self.brain.chatbot_url))
+                       .replace("{chatbot_url}", self.brain.chatbot_endpoint)
                        )
 
         with open("report.html", "w", encoding="utf-8", errors="backslashreplace") as f:

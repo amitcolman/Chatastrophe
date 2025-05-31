@@ -9,6 +9,7 @@ class IntegrationComponent:
         self.logger = logging.getLogger(__name__)
         self.session = requests.Session()
         self.url = url
+        self.full_url = url
         self.params: Dict[str, Any] = {}
 
     def _try_request(self, url: str, method: str, message: str, **kwargs) -> Dict[str, Any]:
@@ -16,7 +17,7 @@ class IntegrationComponent:
         try:
             response = self.session.request(method, url, **kwargs)
             response.raise_for_status()
-            
+            data = ""
             if response.text:
                 try:
                     data = response.json()
@@ -32,9 +33,19 @@ class IntegrationComponent:
                 "status": response.status_code,
                 "data": data
             }
-            
-        except requests.RequestException:
-            return None
+
+        except requests.exceptions.HTTPError as e:
+            return {
+                "status": e.response.status_code,
+                "data": {"error": str(e)}
+            }
+
+        except requests.RequestException as e:
+            return {
+                "status": None,
+                "error": f"Request failed: {str(e)}"
+            }
+
 
     def replace_strings(self, obj, message):
         if isinstance(obj, dict):
@@ -45,6 +56,9 @@ class IntegrationComponent:
             return message
         else:
             return obj
+
+
+
 
     def send_message_api(self, url: str, message: str) -> Dict[str, Any]:
         """Smart message sender that tries different request methods and parameter structures"""
@@ -78,26 +92,31 @@ class IntegrationComponent:
                 headers=self.params.get('headers', {})
             )
             if response and response["status"] in [200, 201]:
-                return response['data'].get(self.params.get('response_field'))
+                return {
+                    "status": 200,
+                    "data": response['data'].get(self.params.get('response_field'))
+                }
 
         # Common parameter names used in APIs
         param_names = ['message', 'text', 'query', 'q', 'prompt', 'input', 'msg']
         
         # List of endpoints to try (empty string first, then common endpoints)
-        endpoints = ['/chat', '/llm4shell-lv1', '/api', '/query', '/ask', '/get']
-        
+        endpoints = ['/chat', '/llm4shell-lv1', '/get', '/api', '/query', '/ask', '']
         for endpoint in endpoints:
             full_url = f"{url.rstrip('/')}{endpoint}"
-            
-            # Try GET with different parameter names
+            error404 = False
+
             for param in param_names:
+                self.logger.info(f"attempting to requests {full_url} with: {param}")
+
+                # Try GET with different parameter names
                 response = self._try_request(
                     full_url, 
                     'GET',
                     message,
                     params={param: message}
                 )
-                if response and response["status"] in [200, 201]:
+                if response and response["status"] in [200, 201] and not response['data']['response'].strip().startswith('<!DOCTYPE html>'):
                     headers = {'Content-Type': 'application/json'}
                     self.params = {
                         'method': 'GET',
@@ -106,7 +125,21 @@ class IntegrationComponent:
                         'headers': headers,
                         **self.params
                     }
-                    return response['data'].get(self.params.get('response_field'))
+                    self.full_url = full_url
+                    return {
+                        "status": 200,
+                        "data": response['data'].get(self.params.get('response_field'))
+                    }
+
+                elif response and response["status"] == 404: # Not Found
+                    error404 = True
+                    break
+
+                elif response and response["status"] == 405: # Method Not Allowed
+                    break
+
+            if error404:
+                continue
 
             # Try POST with different body structures
             common_body_structures = [
@@ -138,7 +171,11 @@ class IntegrationComponent:
                         'headers': headers,
                         **self.params
                     }
-                    return response['data'].get(self.params.get('response_field'))
+                    self.full_url = full_url
+                    return {
+                        "status": 200,
+                        "data": response['data'].get(self.params.get('response_field'))
+                    }
 
         # If all attempts fail, return error
         return {
@@ -149,6 +186,10 @@ class IntegrationComponent:
     def send_attack_command(self, prompt: str) -> Dict[str, Any]:
         """Send an attack command using the smart message sender"""
         try:
-            return {"status": 200, "data": self.send_message_api(url=self.url, message=prompt)}
+            response = self.send_message_api(url=self.url, message=prompt)
+            if response["status"] == 200:
+                return {"status": 200, "data": response["data"], "endpoint": self.full_url}
+            else:
+                return {"status": 404, "data": response["data"], "endpoint": self.full_url}
         except Exception as e:
-            return {"status": 400, "data": {"error": str(e)}}
+            return {"status": 400, "data": {"error": str(e)}, "endpoint": self.full_url}
