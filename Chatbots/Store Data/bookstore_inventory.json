@@ -1,0 +1,402 @@
+[
+  {
+    "book_id": 1,
+    "title": "Radio game far tonight a",
+    "author": "Shawn Massey",
+    "genre": "Non-Fiction",
+    "price": 7.96,
+    "stock_quantity": 14
+  },
+  {
+    "book_id": 2,
+    "title": "Argue professor",
+    "author": "Christian Farmer",
+    "genre": "Biography",
+    "price": 6.84,
+    "stock_quantity": 50
+  },
+  {
+    "book_id": 3,
+    "title": "Movie affect",
+    "author": "Jessica Johnson",
+    "genre": "Non-Fiction",
+    "price": 33.35,
+    "stock_quantity": 94
+  },
+  {
+    "book_id": 4,
+    "title": "Military manage",
+    "author": "David Carroll",
+    "genre": "Romance",
+    "price": 43.62,
+    "stock_quantity": 66
+  },
+  {
+    "book_id": 5,
+    "title": "Thank whom treat significant",
+    "author": "Joanna Williams",
+    "genre": "Non-Fiction",
+    "price": 46.5,
+    "stock_quantity": 13
+  },
+  {
+    "book_id": 6,
+    "title": "Plant president",
+    "author": "Jessica Michael",
+    "genre": "Mystery",
+    "price": 40.13,
+    "stock_quantity": 94
+  },
+  {
+    "book_id": 7,
+    "title": "Trouble institution however seem",
+    "author": "Matthew Briggs",
+    "genre": "Biography",
+    "price": 30.3,
+    "stock_quantity": 42
+  },
+  {
+    "book_id": 8,
+    "title": "There cause hope growth",
+    "author": "Sharon Alvarado",
+    "genre": "Sci-Fi",
+    "price": 19.25,
+    "stock_quantity": 44
+  },
+  {
+    "book_id": 9,
+    "title": "Compare since interesting radio",
+    "author": "Randy Hansen",
+    "genre": "Biography",
+    "price": 24.33,
+    "stock_quantity": 45
+  },
+  {
+    "book_id": 10,
+    "title": "Again major six American bag",
+    "author": "Fernando Harris",
+    "genre": "Mystery",
+    "price": 37.94,
+    "stock_quantity": 2
+  },
+  {
+    "book_id": 11,
+    "title": "Including public partner",
+    "author": "Miss Valerie Anderson",
+    "genre": "Romance",
+    "price": 9.28,
+    "stock_quantity": 91
+  },
+  {
+    "book_id": 12,
+    "title": "Various in experience",
+    "author": "Laura Woods",
+    "genre": "Mystery",
+    "price": 24.44,
+    "stock_quantity": 16
+  },
+  {
+    "book_id": 13,
+    "title": "Including manager wide pick me",
+    "author": "Kelsey Buckley",
+    "genre": "Sci-Fi",
+    "price": 13.45,
+    "stock_quantity": 74
+  },
+  {
+    "book_id": 14,
+    "title": "Consumer sound",
+    "author": "Debra Collier",
+    "genre": "Fantasy",
+    "price": 17.02,
+    "stock_quantity": 95
+  },
+  {
+    "book_id": 15,
+    "title": "Professor laugh all building",
+    "author": "Eric Aguirre",
+    "genre": "Biography",
+    "price": 49.24,
+    "stock_quantity": 81
+  },
+  {
+    "book_id": 16,
+    "title": "Adult special show cover",
+    "author": "Sarah Thomas",
+    "genre": "Sci-Fi",
+    "price": 25.07,
+    "stock_quantity": 43
+  },
+  {
+    "book_id": 17,
+    "title": "Change find player thought standard",
+    "author": "Amber James",
+    "genre": "Biography",
+    "price": 40.45,
+    "stock_quantity": 76
+  },
+  {
+    "book_id": 18,
+    "title": "Order natural we",
+    "author": "Robert Clark",
+    "genre": "Mystery",
+    "price": 45.85,
+    "stock_quantity": 16
+  },
+  {
+    "book_id": 19,
+    "title": "Full environmental main hand table",
+    "author": "Paul Thomas",
+    "genre": "Fantasy",
+    "price": 46.01,
+    "stock_quantity": 72
+  },
+  {
+    "book_id": 20,
+    "title": "Though oil religious true another",
+    "author": "Christopher Bradley",
+    "genre": "Romance",
+    "price": 34.39,
+    "stock_quantity": 85
+  },
+  {
+    "book_id": 21,
+    "title": "Manager where question home expert",
+    "author": "Christopher Blanchard",
+    "genre": "Fiction",
+    "price": 26.22,
+    "stock_quantity": 77
+  },
+  {
+    "book_id": 22,
+    "title": "Site like no southern major",
+    "author": "Alexa Pollard",
+    "genre": "Romance",
+    "price": 31.26,
+    "stock_quantity": 39
+  },
+  {
+    "book_id": 23,
+    "title": "Would well coach send",
+    "author": "Andrew Gomez",
+    "genre": "Sci-Fi",
+    "price": 32.75,
+    "stock_quantity": 38
+  },
+  {
+    "book_id": 24,
+    "title": "Piece fly",
+    "author": "Jeremy Cox",
+    "genre": "Non-Fiction",
+    "price": 31.02,
+    "stock_quantity": 9
+  },
+  {
+    "book_id": 25,
+    "title": "Must piece happy",
+    "author": "David Owens",
+    "genre": "Sci-Fi",
+    "price": 10.22,
+    "stock_quantity": 61
+  },
+  {
+    "book_id": 26,
+    "title": "Attack administration exactly economic",
+    "author": "Michael Hayes",
+    "genre": "Non-Fiction",
+    "price": 16.08,
+    "stock_quantity": 41
+  },
+  {
+    "book_id": 27,
+    "title": "Feeling out college",
+    "author": "Cynthia Payne",
+    "genre": "Romance",
+    "price": 11.89,
+    "stock_quantity": 16
+  },
+  {
+    "book_id": 28,
+    "title": "Instead low",
+    "author": "Krystal Williams",
+    "genre": "Fiction",
+    "price": 33.03,
+    "stock_quantity": 50
+  },
+  {
+    "book_id": 29,
+    "title": "Address think keep past",
+    "author": "Raymond Jackson",
+    "genre": "Sci-Fi",
+    "price": 29.96,
+    "stock_quantity": 14
+  },
+  {
+    "book_id": 30,
+    "title": "Stay much most",
+    "author": "Michele Martinez",
+    "genre": "Fiction",
+    "price": 40.74,
+    "stock_quantity": 96
+  },
+  {
+    "book_id": 31,
+    "title": "Bar meeting us",
+    "author": "David Lara",
+    "genre": "Romance",
+    "price": 32.93,
+    "stock_quantity": 51
+  },
+  {
+    "book_id": 32,
+    "title": "Produce rest study newspaper performance",
+    "author": "Amber White",
+    "genre": "Romance",
+    "price": 13.74,
+    "stock_quantity": 8
+  },
+  {
+    "book_id": 33,
+    "title": "When house wish involve",
+    "author": "April Wolfe",
+    "genre": "Sci-Fi",
+    "price": 6.03,
+    "stock_quantity": 61
+  },
+  {
+    "book_id": 34,
+    "title": "Become account senior raise",
+    "author": "April Larsen",
+    "genre": "History",
+    "price": 9.76,
+    "stock_quantity": 55
+  },
+  {
+    "book_id": 35,
+    "title": "Range cost",
+    "author": "Jeffrey Tran",
+    "genre": "Non-Fiction",
+    "price": 47.78,
+    "stock_quantity": 3
+  },
+  {
+    "book_id": 36,
+    "title": "Recent stand",
+    "author": "Sandra Coffey",
+    "genre": "Biography",
+    "price": 28.84,
+    "stock_quantity": 53
+  },
+  {
+    "book_id": 37,
+    "title": "Involve later course country",
+    "author": "Matthew Giles",
+    "genre": "Fiction",
+    "price": 28.03,
+    "stock_quantity": 83
+  },
+  {
+    "book_id": 38,
+    "title": "Really structure",
+    "author": "Susan Ponce",
+    "genre": "Romance",
+    "price": 16.23,
+    "stock_quantity": 17
+  },
+  {
+    "book_id": 39,
+    "title": "Than position evidence as protect",
+    "author": "Jonathon Snyder",
+    "genre": "Mystery",
+    "price": 41.52,
+    "stock_quantity": 90
+  },
+  {
+    "book_id": 40,
+    "title": "Task lead town young",
+    "author": "Michael Fisher",
+    "genre": "Romance",
+    "price": 24.34,
+    "stock_quantity": 85
+  },
+  {
+    "book_id": 41,
+    "title": "Situation gun",
+    "author": "Peter Moore",
+    "genre": "Fiction",
+    "price": 25.09,
+    "stock_quantity": 6
+  },
+  {
+    "book_id": 42,
+    "title": "Realize because degree",
+    "author": "Kristen Larson",
+    "genre": "Non-Fiction",
+    "price": 33.43,
+    "stock_quantity": 29
+  },
+  {
+    "book_id": 43,
+    "title": "Culture space",
+    "author": "Christopher Brooks",
+    "genre": "Mystery",
+    "price": 29.68,
+    "stock_quantity": 29
+  },
+  {
+    "book_id": 44,
+    "title": "Clearly last yourself resource",
+    "author": "Jessica Brown",
+    "genre": "Sci-Fi",
+    "price": 15.15,
+    "stock_quantity": 74
+  },
+  {
+    "book_id": 45,
+    "title": "Food hear north responsibility",
+    "author": "Sarah Hernandez",
+    "genre": "Non-Fiction",
+    "price": 20.46,
+    "stock_quantity": 44
+  },
+  {
+    "book_id": 46,
+    "title": "Billion career",
+    "author": "Raymond Smith",
+    "genre": "Biography",
+    "price": 33.92,
+    "stock_quantity": 3
+  },
+  {
+    "book_id": 47,
+    "title": "Place all live agency federal",
+    "author": "Melanie Scott",
+    "genre": "Sci-Fi",
+    "price": 40.86,
+    "stock_quantity": 92
+  },
+  {
+    "book_id": 48,
+    "title": "Not sure tend",
+    "author": "Kenneth Bruce",
+    "genre": "Sci-Fi",
+    "price": 34.03,
+    "stock_quantity": 40
+  },
+  {
+    "book_id": 49,
+    "title": "That brother nothing concern",
+    "author": "Tiffany Johnson",
+    "genre": "Sci-Fi",
+    "price": 22.39,
+    "stock_quantity": 48
+  },
+  {
+    "book_id": 50,
+    "title": "Than effort view cultural",
+    "author": "Jessica Lee",
+    "genre": "Fantasy",
+    "price": 37.83,
+    "stock_quantity": 67
+  }
+]

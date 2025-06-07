@@ -1,0 +1,1395 @@
+[
+  {
+    "purchase_id": 1,
+    "user_id": 50,
+    "book_id": 22,
+    "quantity": 1,
+    "purchase_date": "2024-08-06"
+  },
+  {
+    "purchase_id": 2,
+    "user_id": 78,
+    "book_id": 44,
+    "quantity": 2,
+    "purchase_date": "2024-06-17"
+  },
+  {
+    "purchase_id": 3,
+    "user_id": 60,
+    "book_id": 36,
+    "quantity": 3,
+    "purchase_date": "2025-03-31"
+  },
+  {
+    "purchase_id": 4,
+    "user_id": 69,
+    "book_id": 40,
+    "quantity": 3,
+    "purchase_date": "2024-12-31"
+  },
+  {
+    "purchase_id": 5,
+    "user_id": 22,
+    "book_id": 3,
+    "quantity": 1,
+    "purchase_date": "2024-09-16"
+  },
+  {
+    "purchase_id": 6,
+    "user_id": 76,
+    "book_id": 42,
+    "quantity": 3,
+    "purchase_date": "2024-10-16"
+  },
+  {
+    "purchase_id": 7,
+    "user_id": 57,
+    "book_id": 38,
+    "quantity": 2,
+    "purchase_date": "2025-03-16"
+  },
+  {
+    "purchase_id": 8,
+    "user_id": 65,
+    "book_id": 3,
+    "quantity": 1,
+    "purchase_date": "2024-11-04"
+  },
+  {
+    "purchase_id": 9,
+    "user_id": 5,
+    "book_id": 10,
+    "quantity": 1,
+    "purchase_date": "2024-12-28"
+  },
+  {
+    "purchase_id": 10,
+    "user_id": 70,
+    "book_id": 42,
+    "quantity": 3,
+    "purchase_date": "2024-09-02"
+  },
+  {
+    "purchase_id": 11,
+    "user_id": 79,
+    "book_id": 5,
+    "quantity": 2,
+    "purchase_date": "2024-07-07"
+  },
+  {
+    "purchase_id": 12,
+    "user_id": 16,
+    "book_id": 36,
+    "quantity": 3,
+    "purchase_date": "2024-12-12"
+  },
+  {
+    "purchase_id": 13,
+    "user_id": 45,
+    "book_id": 35,
+    "quantity": 3,
+    "purchase_date": "2025-04-15"
+  },
+  {
+    "purchase_id": 14,
+    "user_id": 79,
+    "book_id": 16,
+    "quantity": 3,
+    "purchase_date": "2024-08-25"
+  },
+  {
+    "purchase_id": 15,
+    "user_id": 28,
+    "book_id": 29,
+    "quantity": 3,
+    "purchase_date": "2025-01-09"
+  },
+  {
+    "purchase_id": 16,
+    "user_id": 37,
+    "book_id": 17,
+    "quantity": 3,
+    "purchase_date": "2024-07-04"
+  },
+  {
+    "purchase_id": 17,
+    "user_id": 20,
+    "book_id": 16,
+    "quantity": 2,
+    "purchase_date": "2025-03-04"
+  },
+  {
+    "purchase_id": 18,
+    "user_id": 57,
+    "book_id": 40,
+    "quantity": 1,
+    "purchase_date": "2025-02-26"
+  },
+  {
+    "purchase_id": 19,
+    "user_id": 74,
+    "book_id": 9,
+    "quantity": 2,
+    "purchase_date": "2024-11-18"
+  },
+  {
+    "purchase_id": 20,
+    "user_id": 65,
+    "book_id": 9,
+    "quantity": 3,
+    "purchase_date": "2025-03-28"
+  },
+  {
+    "purchase_id": 21,
+    "user_id": 41,
+    "book_id": 45,
+    "quantity": 2,
+    "purchase_date": "2024-09-11"
+  },
+  {
+    "purchase_id": 22,
+    "user_id": 79,
+    "book_id": 14,
+    "quantity": 3,
+    "purchase_date": "2025-02-23"
+  },
+  {
+    "purchase_id": 23,
+    "user_id": 10,
+    "book_id": 46,
+    "quantity": 2,
+    "purchase_date": "2024-11-12"
+  },
+  {
+    "purchase_id": 24,
+    "user_id": 68,
+    "book_id": 25,
+    "quantity": 1,
+    "purchase_date": "2025-03-26"
+  },
+  {
+    "purchase_id": 25,
+    "user_id": 60,
+    "book_id": 47,
+    "quantity": 3,
+    "purchase_date": "2024-05-21"
+  },
+  {
+    "purchase_id": 26,
+    "user_id": 39,
+    "book_id": 41,
+    "quantity": 1,
+    "purchase_date": "2024-06-18"
+  },
+  {
+    "purchase_id": 27,
+    "user_id": 73,
+    "book_id": 6,
+    "quantity": 3,
+    "purchase_date": "2024-05-22"
+  },
+  {
+    "purchase_id": 28,
+    "user_id": 21,
+    "book_id": 39,
+    "quantity": 1,
+    "purchase_date": "2024-10-11"
+  },
+  {
+    "purchase_id": 29,
+    "user_id": 20,
+    "book_id": 12,
+    "quantity": 1,
+    "purchase_date": "2024-12-19"
+  },
+  {
+    "purchase_id": 30,
+    "user_id": 23,
+    "book_id": 27,
+    "quantity": 1,
+    "purchase_date": "2024-11-14"
+  },
+  {
+    "purchase_id": 31,
+    "user_id": 38,
+    "book_id": 36,
+    "quantity": 1,
+    "purchase_date": "2024-05-30"
+  },
+  {
+    "purchase_id": 32,
+    "user_id": 44,
+    "book_id": 32,
+    "quantity": 1,
+    "purchase_date": "2025-01-13"
+  },
+  {
+    "purchase_id": 33,
+    "user_id": 47,
+    "book_id": 13,
+    "quantity": 1,
+    "purchase_date": "2025-01-29"
+  },
+  {
+    "purchase_id": 34,
+    "user_id": 37,
+    "book_id": 30,
+    "quantity": 2,
+    "purchase_date": "2024-11-07"
+  },
+  {
+    "purchase_id": 35,
+    "user_id": 1,
+    "book_id": 5,
+    "quantity": 3,
+    "purchase_date": "2024-07-24"
+  },
+  {
+    "purchase_id": 36,
+    "user_id": 46,
+    "book_id": 21,
+    "quantity": 2,
+    "purchase_date": "2024-05-23"
+  },
+  {
+    "purchase_id": 37,
+    "user_id": 60,
+    "book_id": 30,
+    "quantity": 2,
+    "purchase_date": "2025-04-06"
+  },
+  {
+    "purchase_id": 38,
+    "user_id": 4,
+    "book_id": 12,
+    "quantity": 2,
+    "purchase_date": "2024-08-05"
+  },
+  {
+    "purchase_id": 39,
+    "user_id": 77,
+    "book_id": 26,
+    "quantity": 2,
+    "purchase_date": "2024-10-27"
+  },
+  {
+    "purchase_id": 40,
+    "user_id": 35,
+    "book_id": 27,
+    "quantity": 3,
+    "purchase_date": "2025-01-14"
+  },
+  {
+    "purchase_id": 41,
+    "user_id": 76,
+    "book_id": 22,
+    "quantity": 2,
+    "purchase_date": "2024-10-06"
+  },
+  {
+    "purchase_id": 42,
+    "user_id": 5,
+    "book_id": 4,
+    "quantity": 1,
+    "purchase_date": "2024-11-28"
+  },
+  {
+    "purchase_id": 43,
+    "user_id": 52,
+    "book_id": 49,
+    "quantity": 3,
+    "purchase_date": "2024-07-30"
+  },
+  {
+    "purchase_id": 44,
+    "user_id": 47,
+    "book_id": 41,
+    "quantity": 3,
+    "purchase_date": "2025-02-14"
+  },
+  {
+    "purchase_id": 45,
+    "user_id": 10,
+    "book_id": 11,
+    "quantity": 3,
+    "purchase_date": "2024-07-10"
+  },
+  {
+    "purchase_id": 46,
+    "user_id": 12,
+    "book_id": 9,
+    "quantity": 3,
+    "purchase_date": "2024-08-17"
+  },
+  {
+    "purchase_id": 47,
+    "user_id": 27,
+    "book_id": 15,
+    "quantity": 2,
+    "purchase_date": "2024-09-02"
+  },
+  {
+    "purchase_id": 48,
+    "user_id": 29,
+    "book_id": 20,
+    "quantity": 1,
+    "purchase_date": "2024-08-04"
+  },
+  {
+    "purchase_id": 49,
+    "user_id": 74,
+    "book_id": 21,
+    "quantity": 3,
+    "purchase_date": "2024-05-21"
+  },
+  {
+    "purchase_id": 50,
+    "user_id": 63,
+    "book_id": 50,
+    "quantity": 1,
+    "purchase_date": "2024-12-03"
+  },
+  {
+    "purchase_id": 51,
+    "user_id": 31,
+    "book_id": 15,
+    "quantity": 2,
+    "purchase_date": "2024-10-30"
+  },
+  {
+    "purchase_id": 52,
+    "user_id": 68,
+    "book_id": 25,
+    "quantity": 3,
+    "purchase_date": "2024-06-16"
+  },
+  {
+    "purchase_id": 53,
+    "user_id": 39,
+    "book_id": 48,
+    "quantity": 1,
+    "purchase_date": "2024-06-18"
+  },
+  {
+    "purchase_id": 54,
+    "user_id": 42,
+    "book_id": 9,
+    "quantity": 2,
+    "purchase_date": "2025-02-08"
+  },
+  {
+    "purchase_id": 55,
+    "user_id": 41,
+    "book_id": 23,
+    "quantity": 1,
+    "purchase_date": "2024-08-06"
+  },
+  {
+    "purchase_id": 56,
+    "user_id": 66,
+    "book_id": 49,
+    "quantity": 3,
+    "purchase_date": "2024-08-03"
+  },
+  {
+    "purchase_id": 57,
+    "user_id": 43,
+    "book_id": 19,
+    "quantity": 1,
+    "purchase_date": "2024-10-19"
+  },
+  {
+    "purchase_id": 58,
+    "user_id": 36,
+    "book_id": 12,
+    "quantity": 3,
+    "purchase_date": "2024-09-28"
+  },
+  {
+    "purchase_id": 59,
+    "user_id": 55,
+    "book_id": 42,
+    "quantity": 2,
+    "purchase_date": "2024-09-28"
+  },
+  {
+    "purchase_id": 60,
+    "user_id": 11,
+    "book_id": 20,
+    "quantity": 3,
+    "purchase_date": "2024-10-10"
+  },
+  {
+    "purchase_id": 61,
+    "user_id": 76,
+    "book_id": 25,
+    "quantity": 1,
+    "purchase_date": "2024-07-28"
+  },
+  {
+    "purchase_id": 62,
+    "user_id": 71,
+    "book_id": 37,
+    "quantity": 3,
+    "purchase_date": "2024-07-13"
+  },
+  {
+    "purchase_id": 63,
+    "user_id": 65,
+    "book_id": 20,
+    "quantity": 1,
+    "purchase_date": "2024-09-17"
+  },
+  {
+    "purchase_id": 64,
+    "user_id": 43,
+    "book_id": 27,
+    "quantity": 1,
+    "purchase_date": "2025-01-17"
+  },
+  {
+    "purchase_id": 65,
+    "user_id": 5,
+    "book_id": 18,
+    "quantity": 1,
+    "purchase_date": "2024-06-13"
+  },
+  {
+    "purchase_id": 66,
+    "user_id": 27,
+    "book_id": 16,
+    "quantity": 3,
+    "purchase_date": "2024-09-29"
+  },
+  {
+    "purchase_id": 67,
+    "user_id": 62,
+    "book_id": 35,
+    "quantity": 3,
+    "purchase_date": "2024-06-02"
+  },
+  {
+    "purchase_id": 68,
+    "user_id": 80,
+    "book_id": 40,
+    "quantity": 1,
+    "purchase_date": "2024-11-19"
+  },
+  {
+    "purchase_id": 69,
+    "user_id": 5,
+    "book_id": 8,
+    "quantity": 3,
+    "purchase_date": "2024-12-14"
+  },
+  {
+    "purchase_id": 70,
+    "user_id": 65,
+    "book_id": 3,
+    "quantity": 1,
+    "purchase_date": "2024-06-09"
+  },
+  {
+    "purchase_id": 71,
+    "user_id": 10,
+    "book_id": 49,
+    "quantity": 3,
+    "purchase_date": "2024-06-25"
+  },
+  {
+    "purchase_id": 72,
+    "user_id": 78,
+    "book_id": 10,
+    "quantity": 2,
+    "purchase_date": "2025-04-04"
+  },
+  {
+    "purchase_id": 73,
+    "user_id": 76,
+    "book_id": 41,
+    "quantity": 3,
+    "purchase_date": "2024-12-21"
+  },
+  {
+    "purchase_id": 74,
+    "user_id": 17,
+    "book_id": 23,
+    "quantity": 2,
+    "purchase_date": "2025-01-08"
+  },
+  {
+    "purchase_id": 75,
+    "user_id": 21,
+    "book_id": 13,
+    "quantity": 3,
+    "purchase_date": "2024-06-09"
+  },
+  {
+    "purchase_id": 76,
+    "user_id": 55,
+    "book_id": 18,
+    "quantity": 3,
+    "purchase_date": "2025-01-07"
+  },
+  {
+    "purchase_id": 77,
+    "user_id": 69,
+    "book_id": 28,
+    "quantity": 1,
+    "purchase_date": "2025-02-28"
+  },
+  {
+    "purchase_id": 78,
+    "user_id": 12,
+    "book_id": 49,
+    "quantity": 3,
+    "purchase_date": "2024-11-03"
+  },
+  {
+    "purchase_id": 79,
+    "user_id": 77,
+    "book_id": 45,
+    "quantity": 2,
+    "purchase_date": "2025-03-18"
+  },
+  {
+    "purchase_id": 80,
+    "user_id": 29,
+    "book_id": 11,
+    "quantity": 2,
+    "purchase_date": "2025-02-23"
+  },
+  {
+    "purchase_id": 81,
+    "user_id": 73,
+    "book_id": 39,
+    "quantity": 2,
+    "purchase_date": "2024-05-27"
+  },
+  {
+    "purchase_id": 82,
+    "user_id": 48,
+    "book_id": 48,
+    "quantity": 1,
+    "purchase_date": "2024-09-21"
+  },
+  {
+    "purchase_id": 83,
+    "user_id": 47,
+    "book_id": 22,
+    "quantity": 1,
+    "purchase_date": "2024-05-25"
+  },
+  {
+    "purchase_id": 84,
+    "user_id": 18,
+    "book_id": 20,
+    "quantity": 3,
+    "purchase_date": "2024-09-21"
+  },
+  {
+    "purchase_id": 85,
+    "user_id": 19,
+    "book_id": 37,
+    "quantity": 1,
+    "purchase_date": "2024-10-04"
+  },
+  {
+    "purchase_id": 86,
+    "user_id": 22,
+    "book_id": 41,
+    "quantity": 2,
+    "purchase_date": "2024-05-06"
+  },
+  {
+    "purchase_id": 87,
+    "user_id": 30,
+    "book_id": 7,
+    "quantity": 3,
+    "purchase_date": "2025-04-02"
+  },
+  {
+    "purchase_id": 88,
+    "user_id": 66,
+    "book_id": 15,
+    "quantity": 3,
+    "purchase_date": "2025-01-31"
+  },
+  {
+    "purchase_id": 89,
+    "user_id": 58,
+    "book_id": 20,
+    "quantity": 3,
+    "purchase_date": "2024-12-17"
+  },
+  {
+    "purchase_id": 90,
+    "user_id": 77,
+    "book_id": 30,
+    "quantity": 1,
+    "purchase_date": "2024-05-19"
+  },
+  {
+    "purchase_id": 91,
+    "user_id": 34,
+    "book_id": 16,
+    "quantity": 1,
+    "purchase_date": "2024-05-22"
+  },
+  {
+    "purchase_id": 92,
+    "user_id": 53,
+    "book_id": 14,
+    "quantity": 2,
+    "purchase_date": "2025-02-13"
+  },
+  {
+    "purchase_id": 93,
+    "user_id": 24,
+    "book_id": 11,
+    "quantity": 1,
+    "purchase_date": "2024-11-14"
+  },
+  {
+    "purchase_id": 94,
+    "user_id": 40,
+    "book_id": 33,
+    "quantity": 1,
+    "purchase_date": "2024-12-03"
+  },
+  {
+    "purchase_id": 95,
+    "user_id": 9,
+    "book_id": 12,
+    "quantity": 1,
+    "purchase_date": "2024-10-16"
+  },
+  {
+    "purchase_id": 96,
+    "user_id": 57,
+    "book_id": 49,
+    "quantity": 3,
+    "purchase_date": "2024-07-23"
+  },
+  {
+    "purchase_id": 97,
+    "user_id": 17,
+    "book_id": 36,
+    "quantity": 2,
+    "purchase_date": "2024-07-31"
+  },
+  {
+    "purchase_id": 98,
+    "user_id": 65,
+    "book_id": 25,
+    "quantity": 3,
+    "purchase_date": "2025-04-02"
+  },
+  {
+    "purchase_id": 99,
+    "user_id": 41,
+    "book_id": 19,
+    "quantity": 1,
+    "purchase_date": "2024-09-13"
+  },
+  {
+    "purchase_id": 100,
+    "user_id": 55,
+    "book_id": 49,
+    "quantity": 3,
+    "purchase_date": "2025-03-15"
+  },
+  {
+    "purchase_id": 101,
+    "user_id": 20,
+    "book_id": 18,
+    "quantity": 3,
+    "purchase_date": "2024-08-17"
+  },
+  {
+    "purchase_id": 102,
+    "user_id": 17,
+    "book_id": 46,
+    "quantity": 3,
+    "purchase_date": "2024-08-16"
+  },
+  {
+    "purchase_id": 103,
+    "user_id": 50,
+    "book_id": 33,
+    "quantity": 3,
+    "purchase_date": "2024-06-26"
+  },
+  {
+    "purchase_id": 104,
+    "user_id": 56,
+    "book_id": 7,
+    "quantity": 3,
+    "purchase_date": "2024-06-25"
+  },
+  {
+    "purchase_id": 105,
+    "user_id": 66,
+    "book_id": 4,
+    "quantity": 1,
+    "purchase_date": "2025-01-03"
+  },
+  {
+    "purchase_id": 106,
+    "user_id": 7,
+    "book_id": 26,
+    "quantity": 1,
+    "purchase_date": "2024-07-02"
+  },
+  {
+    "purchase_id": 107,
+    "user_id": 78,
+    "book_id": 16,
+    "quantity": 2,
+    "purchase_date": "2025-02-02"
+  },
+  {
+    "purchase_id": 108,
+    "user_id": 12,
+    "book_id": 48,
+    "quantity": 1,
+    "purchase_date": "2025-04-16"
+  },
+  {
+    "purchase_id": 109,
+    "user_id": 36,
+    "book_id": 45,
+    "quantity": 3,
+    "purchase_date": "2024-06-28"
+  },
+  {
+    "purchase_id": 110,
+    "user_id": 53,
+    "book_id": 1,
+    "quantity": 1,
+    "purchase_date": "2024-06-11"
+  },
+  {
+    "purchase_id": 111,
+    "user_id": 15,
+    "book_id": 3,
+    "quantity": 1,
+    "purchase_date": "2025-04-19"
+  },
+  {
+    "purchase_id": 112,
+    "user_id": 53,
+    "book_id": 14,
+    "quantity": 3,
+    "purchase_date": "2024-07-10"
+  },
+  {
+    "purchase_id": 113,
+    "user_id": 55,
+    "book_id": 31,
+    "quantity": 2,
+    "purchase_date": "2025-03-12"
+  },
+  {
+    "purchase_id": 114,
+    "user_id": 60,
+    "book_id": 35,
+    "quantity": 2,
+    "purchase_date": "2024-08-21"
+  },
+  {
+    "purchase_id": 115,
+    "user_id": 15,
+    "book_id": 38,
+    "quantity": 1,
+    "purchase_date": "2024-05-07"
+  },
+  {
+    "purchase_id": 116,
+    "user_id": 51,
+    "book_id": 2,
+    "quantity": 1,
+    "purchase_date": "2024-09-05"
+  },
+  {
+    "purchase_id": 117,
+    "user_id": 8,
+    "book_id": 21,
+    "quantity": 1,
+    "purchase_date": "2024-06-05"
+  },
+  {
+    "purchase_id": 118,
+    "user_id": 48,
+    "book_id": 15,
+    "quantity": 2,
+    "purchase_date": "2024-12-05"
+  },
+  {
+    "purchase_id": 119,
+    "user_id": 69,
+    "book_id": 9,
+    "quantity": 1,
+    "purchase_date": "2024-07-08"
+  },
+  {
+    "purchase_id": 120,
+    "user_id": 48,
+    "book_id": 35,
+    "quantity": 2,
+    "purchase_date": "2025-03-04"
+  },
+  {
+    "purchase_id": 121,
+    "user_id": 2,
+    "book_id": 42,
+    "quantity": 3,
+    "purchase_date": "2024-07-09"
+  },
+  {
+    "purchase_id": 122,
+    "user_id": 62,
+    "book_id": 21,
+    "quantity": 1,
+    "purchase_date": "2024-11-04"
+  },
+  {
+    "purchase_id": 123,
+    "user_id": 47,
+    "book_id": 19,
+    "quantity": 1,
+    "purchase_date": "2025-04-02"
+  },
+  {
+    "purchase_id": 124,
+    "user_id": 70,
+    "book_id": 17,
+    "quantity": 2,
+    "purchase_date": "2024-12-05"
+  },
+  {
+    "purchase_id": 125,
+    "user_id": 14,
+    "book_id": 19,
+    "quantity": 2,
+    "purchase_date": "2024-12-14"
+  },
+  {
+    "purchase_id": 126,
+    "user_id": 22,
+    "book_id": 4,
+    "quantity": 3,
+    "purchase_date": "2024-06-29"
+  },
+  {
+    "purchase_id": 127,
+    "user_id": 30,
+    "book_id": 49,
+    "quantity": 3,
+    "purchase_date": "2025-04-28"
+  },
+  {
+    "purchase_id": 128,
+    "user_id": 27,
+    "book_id": 40,
+    "quantity": 3,
+    "purchase_date": "2025-03-16"
+  },
+  {
+    "purchase_id": 129,
+    "user_id": 33,
+    "book_id": 23,
+    "quantity": 3,
+    "purchase_date": "2024-07-07"
+  },
+  {
+    "purchase_id": 130,
+    "user_id": 43,
+    "book_id": 9,
+    "quantity": 2,
+    "purchase_date": "2024-05-29"
+  },
+  {
+    "purchase_id": 131,
+    "user_id": 45,
+    "book_id": 18,
+    "quantity": 3,
+    "purchase_date": "2024-07-16"
+  },
+  {
+    "purchase_id": 132,
+    "user_id": 43,
+    "book_id": 31,
+    "quantity": 1,
+    "purchase_date": "2024-06-12"
+  },
+  {
+    "purchase_id": 133,
+    "user_id": 54,
+    "book_id": 16,
+    "quantity": 1,
+    "purchase_date": "2025-04-30"
+  },
+  {
+    "purchase_id": 134,
+    "user_id": 76,
+    "book_id": 18,
+    "quantity": 3,
+    "purchase_date": "2024-07-17"
+  },
+  {
+    "purchase_id": 135,
+    "user_id": 45,
+    "book_id": 47,
+    "quantity": 3,
+    "purchase_date": "2024-06-19"
+  },
+  {
+    "purchase_id": 136,
+    "user_id": 38,
+    "book_id": 46,
+    "quantity": 2,
+    "purchase_date": "2025-01-17"
+  },
+  {
+    "purchase_id": 137,
+    "user_id": 60,
+    "book_id": 48,
+    "quantity": 2,
+    "purchase_date": "2025-04-24"
+  },
+  {
+    "purchase_id": 138,
+    "user_id": 80,
+    "book_id": 11,
+    "quantity": 1,
+    "purchase_date": "2025-02-03"
+  },
+  {
+    "purchase_id": 139,
+    "user_id": 10,
+    "book_id": 29,
+    "quantity": 3,
+    "purchase_date": "2024-06-02"
+  },
+  {
+    "purchase_id": 140,
+    "user_id": 10,
+    "book_id": 15,
+    "quantity": 2,
+    "purchase_date": "2025-03-28"
+  },
+  {
+    "purchase_id": 141,
+    "user_id": 24,
+    "book_id": 38,
+    "quantity": 1,
+    "purchase_date": "2024-11-17"
+  },
+  {
+    "purchase_id": 142,
+    "user_id": 58,
+    "book_id": 9,
+    "quantity": 3,
+    "purchase_date": "2024-10-11"
+  },
+  {
+    "purchase_id": 143,
+    "user_id": 70,
+    "book_id": 50,
+    "quantity": 1,
+    "purchase_date": "2024-08-01"
+  },
+  {
+    "purchase_id": 144,
+    "user_id": 80,
+    "book_id": 12,
+    "quantity": 1,
+    "purchase_date": "2024-10-29"
+  },
+  {
+    "purchase_id": 145,
+    "user_id": 61,
+    "book_id": 3,
+    "quantity": 2,
+    "purchase_date": "2024-07-06"
+  },
+  {
+    "purchase_id": 146,
+    "user_id": 19,
+    "book_id": 38,
+    "quantity": 1,
+    "purchase_date": "2024-08-10"
+  },
+  {
+    "purchase_id": 147,
+    "user_id": 17,
+    "book_id": 41,
+    "quantity": 1,
+    "purchase_date": "2024-07-26"
+  },
+  {
+    "purchase_id": 148,
+    "user_id": 15,
+    "book_id": 34,
+    "quantity": 2,
+    "purchase_date": "2024-05-01"
+  },
+  {
+    "purchase_id": 149,
+    "user_id": 41,
+    "book_id": 5,
+    "quantity": 1,
+    "purchase_date": "2024-12-13"
+  },
+  {
+    "purchase_id": 150,
+    "user_id": 50,
+    "book_id": 35,
+    "quantity": 1,
+    "purchase_date": "2025-01-31"
+  },
+  {
+    "purchase_id": 151,
+    "user_id": 19,
+    "book_id": 7,
+    "quantity": 2,
+    "purchase_date": "2024-08-11"
+  },
+  {
+    "purchase_id": 152,
+    "user_id": 73,
+    "book_id": 14,
+    "quantity": 2,
+    "purchase_date": "2025-03-27"
+  },
+  {
+    "purchase_id": 153,
+    "user_id": 74,
+    "book_id": 29,
+    "quantity": 2,
+    "purchase_date": "2024-12-19"
+  },
+  {
+    "purchase_id": 154,
+    "user_id": 45,
+    "book_id": 44,
+    "quantity": 2,
+    "purchase_date": "2025-04-20"
+  },
+  {
+    "purchase_id": 155,
+    "user_id": 47,
+    "book_id": 17,
+    "quantity": 1,
+    "purchase_date": "2025-01-02"
+  },
+  {
+    "purchase_id": 156,
+    "user_id": 60,
+    "book_id": 43,
+    "quantity": 3,
+    "purchase_date": "2024-07-20"
+  },
+  {
+    "purchase_id": 157,
+    "user_id": 71,
+    "book_id": 16,
+    "quantity": 3,
+    "purchase_date": "2024-06-22"
+  },
+  {
+    "purchase_id": 158,
+    "user_id": 68,
+    "book_id": 43,
+    "quantity": 2,
+    "purchase_date": "2024-12-27"
+  },
+  {
+    "purchase_id": 159,
+    "user_id": 77,
+    "book_id": 8,
+    "quantity": 2,
+    "purchase_date": "2024-06-23"
+  },
+  {
+    "purchase_id": 160,
+    "user_id": 23,
+    "book_id": 42,
+    "quantity": 1,
+    "purchase_date": "2025-04-30"
+  },
+  {
+    "purchase_id": 161,
+    "user_id": 39,
+    "book_id": 15,
+    "quantity": 1,
+    "purchase_date": "2025-03-11"
+  },
+  {
+    "purchase_id": 162,
+    "user_id": 55,
+    "book_id": 45,
+    "quantity": 2,
+    "purchase_date": "2024-06-28"
+  },
+  {
+    "purchase_id": 163,
+    "user_id": 3,
+    "book_id": 31,
+    "quantity": 3,
+    "purchase_date": "2025-01-14"
+  },
+  {
+    "purchase_id": 164,
+    "user_id": 20,
+    "book_id": 4,
+    "quantity": 3,
+    "purchase_date": "2025-02-12"
+  },
+  {
+    "purchase_id": 165,
+    "user_id": 33,
+    "book_id": 10,
+    "quantity": 2,
+    "purchase_date": "2025-04-15"
+  },
+  {
+    "purchase_id": 166,
+    "user_id": 54,
+    "book_id": 26,
+    "quantity": 2,
+    "purchase_date": "2024-09-19"
+  },
+  {
+    "purchase_id": 167,
+    "user_id": 2,
+    "book_id": 19,
+    "quantity": 1,
+    "purchase_date": "2024-07-16"
+  },
+  {
+    "purchase_id": 168,
+    "user_id": 34,
+    "book_id": 30,
+    "quantity": 3,
+    "purchase_date": "2024-06-26"
+  },
+  {
+    "purchase_id": 169,
+    "user_id": 62,
+    "book_id": 23,
+    "quantity": 1,
+    "purchase_date": "2024-12-07"
+  },
+  {
+    "purchase_id": 170,
+    "user_id": 56,
+    "book_id": 37,
+    "quantity": 3,
+    "purchase_date": "2024-10-10"
+  },
+  {
+    "purchase_id": 171,
+    "user_id": 35,
+    "book_id": 41,
+    "quantity": 1,
+    "purchase_date": "2024-06-03"
+  },
+  {
+    "purchase_id": 172,
+    "user_id": 52,
+    "book_id": 35,
+    "quantity": 2,
+    "purchase_date": "2024-07-14"
+  },
+  {
+    "purchase_id": 173,
+    "user_id": 17,
+    "book_id": 9,
+    "quantity": 3,
+    "purchase_date": "2024-05-20"
+  },
+  {
+    "purchase_id": 174,
+    "user_id": 77,
+    "book_id": 32,
+    "quantity": 2,
+    "purchase_date": "2024-10-30"
+  },
+  {
+    "purchase_id": 175,
+    "user_id": 36,
+    "book_id": 5,
+    "quantity": 1,
+    "purchase_date": "2024-10-25"
+  },
+  {
+    "purchase_id": 176,
+    "user_id": 68,
+    "book_id": 3,
+    "quantity": 2,
+    "purchase_date": "2024-05-16"
+  },
+  {
+    "purchase_id": 177,
+    "user_id": 6,
+    "book_id": 16,
+    "quantity": 1,
+    "purchase_date": "2024-09-10"
+  },
+  {
+    "purchase_id": 178,
+    "user_id": 65,
+    "book_id": 24,
+    "quantity": 3,
+    "purchase_date": "2024-07-16"
+  },
+  {
+    "purchase_id": 179,
+    "user_id": 5,
+    "book_id": 14,
+    "quantity": 1,
+    "purchase_date": "2025-04-16"
+  },
+  {
+    "purchase_id": 180,
+    "user_id": 48,
+    "book_id": 13,
+    "quantity": 3,
+    "purchase_date": "2025-03-09"
+  },
+  {
+    "purchase_id": 181,
+    "user_id": 4,
+    "book_id": 41,
+    "quantity": 1,
+    "purchase_date": "2024-05-24"
+  },
+  {
+    "purchase_id": 182,
+    "user_id": 57,
+    "book_id": 28,
+    "quantity": 2,
+    "purchase_date": "2024-11-15"
+  },
+  {
+    "purchase_id": 183,
+    "user_id": 71,
+    "book_id": 44,
+    "quantity": 2,
+    "purchase_date": "2024-08-07"
+  },
+  {
+    "purchase_id": 184,
+    "user_id": 63,
+    "book_id": 38,
+    "quantity": 3,
+    "purchase_date": "2024-11-29"
+  },
+  {
+    "purchase_id": 185,
+    "user_id": 37,
+    "book_id": 1,
+    "quantity": 2,
+    "purchase_date": "2024-09-30"
+  },
+  {
+    "purchase_id": 186,
+    "user_id": 69,
+    "book_id": 48,
+    "quantity": 1,
+    "purchase_date": "2024-06-05"
+  },
+  {
+    "purchase_id": 187,
+    "user_id": 10,
+    "book_id": 31,
+    "quantity": 3,
+    "purchase_date": "2024-11-02"
+  },
+  {
+    "purchase_id": 188,
+    "user_id": 70,
+    "book_id": 10,
+    "quantity": 2,
+    "purchase_date": "2024-11-30"
+  },
+  {
+    "purchase_id": 189,
+    "user_id": 31,
+    "book_id": 31,
+    "quantity": 2,
+    "purchase_date": "2024-06-14"
+  },
+  {
+    "purchase_id": 190,
+    "user_id": 43,
+    "book_id": 48,
+    "quantity": 1,
+    "purchase_date": "2024-08-28"
+  },
+  {
+    "purchase_id": 191,
+    "user_id": 63,
+    "book_id": 40,
+    "quantity": 2,
+    "purchase_date": "2025-02-05"
+  },
+  {
+    "purchase_id": 192,
+    "user_id": 38,
+    "book_id": 49,
+    "quantity": 2,
+    "purchase_date": "2024-07-19"
+  },
+  {
+    "purchase_id": 193,
+    "user_id": 46,
+    "book_id": 38,
+    "quantity": 3,
+    "purchase_date": "2024-06-20"
+  },
+  {
+    "purchase_id": 194,
+    "user_id": 57,
+    "book_id": 39,
+    "quantity": 3,
+    "purchase_date": "2024-10-11"
+  },
+  {
+    "purchase_id": 195,
+    "user_id": 46,
+    "book_id": 46,
+    "quantity": 1,
+    "purchase_date": "2024-07-22"
+  },
+  {
+    "purchase_id": 196,
+    "user_id": 22,
+    "book_id": 31,
+    "quantity": 3,
+    "purchase_date": "2025-03-30"
+  },
+  {
+    "purchase_id": 197,
+    "user_id": 46,
+    "book_id": 10,
+    "quantity": 1,
+    "purchase_date": "2025-01-20"
+  },
+  {
+    "purchase_id": 198,
+    "user_id": 31,
+    "book_id": 36,
+    "quantity": 3,
+    "purchase_date": "2024-12-15"
+  },
+  {
+    "purchase_id": 199,
+    "user_id": 64,
+    "book_id": 12,
+    "quantity": 1,
+    "purchase_date": "2024-10-28"
+  }
+]

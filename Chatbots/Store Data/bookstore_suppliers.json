@@ -1,0 +1,82 @@
+[
+  {
+    "supplier_id": 1,
+    "name": "Vargas and Sons",
+    "contact_name": "Jennifer Lopez",
+    "email": "daniel95@soto.com",
+    "phone": "429.985.4269x838",
+    "address": "1057 Higgins Plain, Craigmouth, SC 46162"
+  },
+  {
+    "supplier_id": 2,
+    "name": "Brown PLC",
+    "contact_name": "Christopher Gomez",
+    "email": "mendezmark@wilcox.com",
+    "phone": "422-244-0303x06604",
+    "address": "6149 Duran Views Apt. 769, Paulatown, MA 47858"
+  },
+  {
+    "supplier_id": 3,
+    "name": "Cook Inc",
+    "contact_name": "Katherine Zamora",
+    "email": "hhendricks@hill.info",
+    "phone": "+1-758-614-7890x6815",
+    "address": "Unit 4641 Box 3679, DPO AP 87565"
+  },
+  {
+    "supplier_id": 4,
+    "name": "Barber PLC",
+    "contact_name": "John Nunez",
+    "email": "fward@reyes.biz",
+    "phone": "001-754-841-5922x793",
+    "address": "0721 Jennifer Station Apt. 882, South Teresaberg, TN 73062"
+  },
+  {
+    "supplier_id": 5,
+    "name": "Obrien-Lopez",
+    "contact_name": "Jennifer Atkins",
+    "email": "kimberly02@zamora.com",
+    "phone": "(765)497-5598x0391",
+    "address": "078 Crystal Cape, Wardview, UT 84180"
+  },
+  {
+    "supplier_id": 6,
+    "name": "Harris Ltd",
+    "contact_name": "Melissa Gomez",
+    "email": "jonkelley@owen.com",
+    "phone": "(912)864-2661",
+    "address": "0630 Joel Avenue, North Alexandriaburgh, VA 80228"
+  },
+  {
+    "supplier_id": 7,
+    "name": "Collins, Williams and Patel",
+    "contact_name": "Stephanie Anderson",
+    "email": "zwhite@white.biz",
+    "phone": "+1-412-353-8685x02674",
+    "address": "3430 Brian Ports Suite 379, Angelshire, VT 63307"
+  },
+  {
+    "supplier_id": 8,
+    "name": "Herrera, Winters and Quinn",
+    "contact_name": "Jay Russell PhD",
+    "email": "stevenweiss@huynh.biz",
+    "phone": "+1-520-739-1689x59580",
+    "address": "5501 Martin Ridges Suite 094, Fowlershire, KY 28543"
+  },
+  {
+    "supplier_id": 9,
+    "name": "Osborne, Davis and Grimes",
+    "contact_name": "Beth Moore",
+    "email": "jenniferowens@alvarez.org",
+    "phone": "134-968-4826",
+    "address": "680 Thomas Streets, East Brandonland, OH 03138"
+  },
+  {
+    "supplier_id": 10,
+    "name": "Thompson, Gomez and Gonzalez",
+    "contact_name": "Tyler Hogan",
+    "email": "thansen@conrad.com",
+    "phone": "(830)780-1826",
+    "address": "Unit 1018 Box 9983, DPO AA 28336"
+  }
+]

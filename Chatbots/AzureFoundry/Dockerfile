@@ -1,0 +1,20 @@
+FROM python:3.9-slim
+
+WORKDIR /aiapp
+
+COPY . .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+RUN useradd -m appuser && chown -R appuser:appuser /app
+USER appuser
+
+ARG AZURE_OPENAI_ENDPOINT
+ARG AZURE_OPENAI_API_KEY
+ARG AZURE_OPENAI_API_VERSION
+ENV AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
+ENV AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
+ENV AZURE_OPENAI_API_VERSION=${AZURE_OPENAI_API_VERSION}
+
+EXPOSE 1234
+CMD ["python", "server.py"]
