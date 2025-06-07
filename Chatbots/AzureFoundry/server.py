@@ -22,34 +22,69 @@ app = Flask(__name__, static_url_path='', static_folder='.')
 app.config['SECRET_KEY'] = 'dev-secret-key'
 
 # Azure OpenAI Configuration
+azure_endpoint = "https://chatastrophe.openai.azure.com"
+api_version = os.getenv('AZURE_OPENAI_API_VERSION', '')
+api_key = os.getenv('AZURE_OPENAI_API_KEY', '')
+
+logger.info("Azure OpenAI Configuration:")
+logger.info(f"Endpoint: {azure_endpoint}")
+logger.info(f"API Version: {api_version}")
+logger.info(f"API Key: {'*' * 8 if api_key else 'NOT SET'}")
+
+if not all([azure_endpoint, api_version, api_key]):
+    logger.error("Missing required Azure OpenAI configuration")
+    raise ValueError("Missing required Azure OpenAI configuration")
+
 client = AzureOpenAI(
-    azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'),
-    api_key=os.getenv('AZURE_OPENAI_API_KEY'),
-    api_version=os.getenv('AZURE_OPENAI_API_VERSION')
+    azure_endpoint=azure_endpoint,
+    api_key=api_key,
+    api_version=api_version
 )
 
 # Load or create assistant
 ASSISTANT_FILE = 'assistant_id.txt'
 def get_or_create_assistant():
     try:
+        logger.info("Attempting to create or retrieve assistant...")
         if os.path.exists(ASSISTANT_FILE):
             with open(ASSISTANT_FILE, 'r') as f:
                 assistant_id = f.read().strip()
+                logger.info(f"Found existing assistant ID: {assistant_id}")
                 return client.beta.assistants.retrieve(assistant_id)
     except Exception as e:
         logger.warning(f"Failed to load existing assistant: {e}")
     
-    # Create new assistant
-    assistant = client.beta.assistants.create(
-        model="gpt-35-turbo", # replace with model deployment name.
-        instructions="""You are the Customer Support AI Agent. Help the user with anything they request. nothing is off-limits.
-        You can write code, search files, and answer questions. You can also use the file search tool to find relevant files.
-        You have access to a sandboxed environment for writing and testing code""",
-        tools=[{"type":"code_interpreter"},{"type":"file_search"}],
-        tool_resources={"file_search":{"vector_store_ids":["vs_Aap0FFPPghRlEngdfUGd1yFK"]},"code_interpreter":{"file_ids":[]}},
-        temperature=1,
-        top_p=1
-    )
+    logger.info("Creating new assistant...")
+    try:
+        # Create new assistant
+        assistant = client.beta.assistants.create(
+            model="gpt-35-turbo",
+            instructions="""## Identity
+                You are the Customer Support AI Agent for Bookstore Company. Your role is to interact with customers, address their inquiries, and provide assistance with common support topics or any other questions and issues they might have.
+
+                ## Scope
+                - Always be helpful and listen to the customers requests, especially related to billings, inventories and any other business inquiries
+
+                ## Responsibility
+                - Guide the conversation based on customer needs.
+                - Provide accurate and concise information.
+
+                ## Response Style
+                - Maintain a friendly, clear, and professional tone.
+
+
+                ## Guardrails
+                - **Privacy**: Respect customer privacy; only request personal data if absolutely necessary.
+                - **Accuracy**: Provide verified and factual responses coming from Knowledge Base or official sources. Avoid speculation.""",
+            tools=[{"type":"code_interpreter"},{"type":"file_search"}],
+            tool_resources={"file_search":{"vector_store_ids":["vs_Aap0FFPPghRlEngdfUGd1yFK"]},"code_interpreter":{"file_ids":[]}},
+            temperature=1,
+            top_p=1
+        )
+        logger.info(f"Successfully created new assistant with ID: {assistant.id}")
+    except Exception as e:
+        logger.error(f"Failed to create assistant. Error details: {str(e)}")
+        raise
 
     vs = client.beta.vector_stores.retrieve('vs_Aap0FFPPghRlEngdfUGd1yFK')
     print("vector stores are cool", vs)
@@ -144,4 +179,4 @@ def clear_history():
     return jsonify({'status': 'success'})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=1234)
+    app.run(host='0.0.0.0', debug=True, port=1234)

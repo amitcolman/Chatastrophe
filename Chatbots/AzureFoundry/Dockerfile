@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 WORKDIR /aiapp
 
@@ -6,12 +6,13 @@ COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN useradd -m appuser && chown -R appuser:appuser /app
+RUN useradd -m appuser && chown -R appuser:appuser /aiapp
 USER appuser
 
 ARG AZURE_OPENAI_ENDPOINT
 ARG AZURE_OPENAI_API_KEY
 ARG AZURE_OPENAI_API_VERSION
+
 ENV AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
 ENV AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
 ENV AZURE_OPENAI_API_VERSION=${AZURE_OPENAI_API_VERSION}
