@@ -330,7 +330,8 @@
             background: white;
             border-radius: 8px;
             overflow: visible;
-
+            width: 100%; /* Make table fill its container */
+            table-layout: auto; /* Let columns size naturally */
         }
 
         .table th {
@@ -480,6 +481,9 @@
         .table, td, th {
         overflow: visible;
         position: relative;
+        word-break: normal; /* Allow normal word breaking */
+        word-wrap: break-word; /* Only break if too long */
+        max-width: none; /* Remove forced 1px max width */
         }
 
         .ai-badge:hover::after {

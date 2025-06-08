@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import List, Dict
 from html import escape
+import re
 
 from brain.brain import BrainComponent
 from enums.severity import Severity
@@ -84,33 +85,55 @@ def _prepare_chart_data(category_stats: Dict[str, CategoryStats]) -> ChartData:
 
 def safe_response(response: str):
     """Replace sensitive data with asterisks"""
-    import re
-    # Patterns to match various sensitive info
-    patterns = [
-        r'password[=:]\s*[\'"]*([^\s\'"]+)',  # Passwords
-        r'password is\s*[\'"]*([^\s\'"]+)',  # Passwords
-        r'pass is\s*[\'"]*([^\s\'"]+)',  # Passwords
-        r'(password\S+|\S+password|\S*(?:p@ssw0rd|admin|root|toor|qwerty)\S*)' # Common passwords
-        r'secret[=:]\s*[\'"]*([^\s\'"]+)',  # Secrets
-        r'secret is\s*[\'"]*([^\s\'"]+)',  # Secrets
-        r'account[=:]\s*[\'"]*([^\s\'"]+)',  # Passwords
-        r'token[=:]\s*[\'"]*([^\s\'"]+)',  # Tokens
-        r'token is\s*[\'"]*([^\s\'"]+)',  # Tokens
-        r'key[=:]\s*[\'"]*([^\s\'"]+)',  # API keys
-        r'key is\s*[\'"]*([^\s\'"]+)',  # Keys
-        r'api[_\s]?key[=:]\s*[\'"]*([^\s\'"]+)',  # API keys
-        r'(\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b)',  # Emails
-        r'([0-9]{13,19})',  # Credit card numbers
-        r'([0-9]{3,4}[-\s]?[0-9]{4})',  # SSN/SIN numbers
-        r'(eyJ[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*)',  # JWT tokens
-        r'(?:password|secret|token)["\s:]+["\s]*([^\s"\']+)',  # Key-value with sensitive data
-        r'(?:bearer|auth(?:orization)?)["\s:]+["\s]*([^\s"\']+)'  # Auth headers with tokens
+
+    key_value_patterns = [
+        # Passwords
+        r'(password|pass|pwd)[\s:=\-]+[\'\"]?([A-Za-z0-9!@#$%^&*()_+=\-\[\]{};:,.<>/?\\|`~]+)',
+        # Secrets
+        r'(secret)[\s:=\-]+[\'\"]?([A-Za-z0-9!@#$%^&*()_+=\-\[\]{};:,.<>/?\\|`~]+)',
+        # Tokens
+        r'(token)[\s:=\-]+[\'\"]?([A-Za-z0-9\-_\.]+)',
+        # API Keys
+        r'(api[_\s]?key|key)[\s:=\-]+[\'\"]?([A-Za-z0-9\-_\.]+)',
+        # SSN
+        r'(ssn)[\s:=\-]+[\'\"]?([0-9]{3}-[0-9]{2}-[0-9]{4})',
+        # Email
+        r'(email)[\s:=\-]+[\'\"]?([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})',
     ]
-    for pattern in patterns:
+
+    standalone_patterns = [
+        # JWT tokens
+        r'(eyJ[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*)',
+        # Credit card numbers
+        r'\b([0-9]{13,19})\b',
+        # SSN
+        r'\b([0-9]{3}-[0-9]{2}-[0-9]{4})\b',
+        # Email
+        r'\b([A-Za-z0-9._%+-]+@[A-ZaZ0-9.-]+\.[A-Za-z]{2,})\b',
+    ]
+
+    def mask_password_list(match):
+        items = match.group(0)
+        def mask_item(item):
+            item = item.strip("'\" ")
+            if len(item) > 2:
+                return item[:2] + '*' * (len(item) - 2)
+            return '*' * len(item)
+        masked = re.sub(r"(['\"])([A-Za-z0-9!@#$%^&*()_+=\-]+)\1", lambda m: f"'{mask_item(m.group(2))}'", items)
+        return masked
+    response = re.sub(r"\[(?:\s*['\"][A-Za-z0-9!@#$%^&*()_+=\-]+['\"]\s*,?)+\]", mask_password_list, response)
+
+    for pattern in key_value_patterns:
         response = re.sub(pattern,
-                          lambda m: m.group(1)[:2] + '*' * (len(m.group(1)) - 2),
+                          lambda m: m.group(1) + m.group(0)[len(m.group(1)):m.start(2)-m.start(1)] + (m.group(2)[:2] + '*' * (len(m.group(2)) - 2) if len(m.group(2)) > 2 else '*' * len(m.group(2))),
                           response,
                           flags=re.IGNORECASE)
+
+    for pattern in standalone_patterns:
+        response = re.sub(pattern,
+                          lambda m: m.group(1)[:2] + '*' * (len(m.group(1)) - 2) if len(m.group(1)) > 2 else '*' * len(m.group(1)),
+                          response)
+
     return escape(response)
 
 
