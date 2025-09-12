@@ -3,18 +3,224 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bookstore Chatbot</title>
+  <title>BookHaven - Your Online Bookstore</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-  <div class="chat-container">
-    <h1>📚 Bookstore Assistant</h1>
-    <div id="chat-box" class="chat-box"></div>
-    <form id="chat-form">
-      <input type="text" id="user-input" placeholder="Ask me about books..." autocomplete="off" required />
-      <button type="submit">Send</button>
-    </form>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <h1><i class="fas fa-book"></i> BookHaven</h1>
+      </div>
+      <nav class="nav">
+        <a href="#" class="nav-link">Home</a>
+        <a href="#books" class="nav-link">Books</a>
+        <a href="#categories" class="nav-link">Categories</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="search-btn"><i class="fas fa-search"></i></button>
+        <button class="cart-btn"><i class="fas fa-shopping-cart"></i> <span class="cart-count">0</span></button>
+        <button class="account-btn"><i class="fas fa-user"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h2>Discover Your Next Great Read</h2>
+        <p>Explore thousands of books from bestsellers to hidden gems</p>
+        <div class="hero-search">
+          <input type="text" placeholder="Search for books, authors, or genres..." class="hero-search-input">
+          <button class="hero-search-btn"><i class="fas fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Books -->
+  <section class="featured-books" id="books">
+    <div class="container">
+      <h2 class="section-title">Featured Books</h2>
+      <div class="books-grid">
+        <div class="book-card">
+          <div class="book-cover">
+            <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=300&h=400&fit=crop" alt="Book Cover" />
+          </div>
+          <div class="book-info">
+            <h3>The Great Adventure</h3>
+            <p class="author">by John Smith</p>
+            <p class="price">$24.99</p>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+        <div class="book-card">
+          <div class="book-cover">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop" alt="Book Cover" />
+          </div>
+          <div class="book-info">
+            <h3>Mystery of the Lost City</h3>
+            <p class="author">by Sarah Johnson</p>
+            <p class="price">$19.99</p>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+        <div class="book-card">
+          <div class="book-cover">
+            <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=300&h=400&fit=crop" alt="Book Cover" />
+          </div>
+          <div class="book-info">
+            <h3>Science and Wonder</h3>
+            <p class="author">by Dr. Emily Davis</p>
+            <p class="price">$29.99</p>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+        <div class="book-card">
+          <div class="book-cover">
+            <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=300&h=400&fit=crop" alt="Book Cover" />
+          </div>
+          <div class="book-info">
+            <h3>Love in Paris</h3>
+            <p class="author">by Marie Claire</p>
+            <p class="price">$22.99</p>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="categories" id="categories">
+    <div class="container">
+      <h2 class="section-title">Browse by Category</h2>
+      <div class="categories-grid">
+        <div class="category-card">
+          <i class="fas fa-magic"></i>
+          <h3>Fantasy</h3>
+          <p>Escape to magical worlds</p>
+        </div>
+        <div class="category-card">
+          <i class="fas fa-search"></i>
+          <h3>Mystery</h3>
+          <p>Solve thrilling puzzles</p>
+        </div>
+        <div class="category-card">
+          <i class="fas fa-heart"></i>
+          <h3>Romance</h3>
+          <p>Fall in love with stories</p>
+        </div>
+        <div class="category-card">
+          <i class="fas fa-rocket"></i>
+          <h3>Sci-Fi</h3>
+          <p>Explore the future</p>
+        </div>
+        <div class="category-card">
+          <i class="fas fa-graduation-cap"></i>
+          <h3>Education</h3>
+          <p>Learn something new</p>
+        </div>
+        <div class="category-card">
+          <i class="fas fa-child"></i>
+          <h3>Children</h3>
+          <p>Stories for young minds</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="newsletter-content">
+        <h2>Stay Updated</h2>
+        <p>Get the latest book recommendations and exclusive offers</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Enter your email" class="newsletter-input">
+          <button type="submit" class="newsletter-btn">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3><i class="fas fa-book"></i> BookHaven</h3>
+          <p>Your trusted online bookstore for all genres and ages.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Categories</h4>
+          <ul>
+            <li><a href="#">Fiction</a></li>
+            <li><a href="#">Non-Fiction</a></li>
+            <li><a href="#">Children's Books</a></li>
+            <li><a href="#">Educational</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Customer Service</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Track Order</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 BookHaven. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Chat Widget -->
+  <div class="chat-widget" id="chat-widget">
+    <div class="chat-widget-header" id="chat-header">
+      <div class="chat-widget-title">
+        <i class="fas fa-robot"></i>
+        <span>BookHaven Assistant</span>
+      </div>
+      <button class="chat-toggle" id="chat-toggle">
+        <i class="fas fa-minus"></i>
+      </button>
+    </div>
+    <div class="chat-widget-body" id="chat-body">
+      <div id="chat-box" class="chat-box"></div>
+      <form id="chat-form">
+        <input type="text" id="user-input" placeholder="Ask me about books..." autocomplete="off" required />
+        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+      </form>
+    </div>
   </div>
+
+  <!-- Chat Trigger Button -->
+  <button class="chat-trigger" id="chat-trigger">
+    <i class="fas fa-comments"></i>
+  </button>
+
   <script src="script.js"></script>
 </body>
 </html>
